@@ -7,6 +7,8 @@
 
     <FrameLayout
         android:id="@+id/rootView"
+        android:background="@color/shakespeare"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

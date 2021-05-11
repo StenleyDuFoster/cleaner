@@ -10,7 +10,16 @@
         <item name="colorSecondaryVariant">@color/conifer</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+
+        <item name="android:windowBackground">@drawable/load_drawable</item>
     </style>
+
+    <style name="TextNormal">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/nexa_thin</item>
+    </style>
+
 </resources>

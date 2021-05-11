@@ -3,5 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque">
 
-    <item android:drawable="@color/dodgerBlueSplash"/>
+    <item android:drawable="@color/shakespeare"/>
+
 </layer-list>

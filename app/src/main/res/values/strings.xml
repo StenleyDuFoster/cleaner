@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Clenner</string>
+    <string name="app_name">Smart Cleaner Light</string>
+    <string name="begin_clean">Начать очистку </string>
+    <string name="swipe_up_to_setup"></string>
 </resources>

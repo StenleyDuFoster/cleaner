@@ -39,14 +39,6 @@ class SendFirstOpenByUserWorker @AssistedInject constructor(
 
         var result = Result.success()
 
-        val notifyBuilder = NotificationBuilder(
-            context = applicationContext,
-            "title",
-            "sub"
-        )
-
-        notifyBuilder.createCleanNotify()
-
         return result
     }
 

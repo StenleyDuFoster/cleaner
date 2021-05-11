@@ -72,4 +72,8 @@ dependencies {
 
     implementation "com.airbnb.android:lottie:3.4.0"//----------------------------------------------Lottie animation
 
+    implementation 'com.jaeger.statusbarutil:library:1.4.0'
+
+    implementation "androidx.activity:activity-ktx:1.2.0"
+
 }
