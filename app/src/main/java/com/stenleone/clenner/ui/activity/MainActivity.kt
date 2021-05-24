@@ -5,8 +5,8 @@ import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityMainBinding
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.ui.activity.base.BaseActivity
-import com.stenleone.clenner.ui.fragment.MainFragment
-import com.stenleone.clenner.util.notification.NotificationBuilder
+import com.stenleone.clenner.ui.adapters.FragmentsAdapter
+import com.stenleone.clenner.util.bind.BindViewPager
 import com.stenleone.clenner.worker.CreateOrUpdateNotificationWorker
 import com.stenleone.clenner.worker.CreatePushNotificationWorker
 import com.stenleone.clenner.worker.SendFirstOpenByUserWorker
@@ -19,16 +19,20 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
     @Inject
     lateinit var prefs: SharedPreferences
 
+    private lateinit var viewPagerAdapter: FragmentsAdapter
+
     override fun setup(savedInstanceState: Bundle?) {
 
-        setupMainFragment()
         setupDefaultValues()
+        setupViewPagerAndBottomNav()
     }
 
-    private fun setupMainFragment() {
-        fragmentContainerId = binding.rootView.id
-        if (supportFragmentManager.findFragmentByTag(MainFragment.TAG) == null) {
-            addFragment(null, MainFragment(), MainFragment.TAG)
+    private fun setupViewPagerAndBottomNav() {
+        viewPagerAdapter = FragmentsAdapter(this)
+        binding.apply {
+            pager.adapter = viewPagerAdapter
+            pager.isUserInputEnabled = false
+            BindViewPager(pager).withBottomNav(bottomNav)
         }
     }
 

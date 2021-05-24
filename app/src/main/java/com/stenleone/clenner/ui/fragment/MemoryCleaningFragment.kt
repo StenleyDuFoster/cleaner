@@ -7,10 +7,10 @@ import com.stenleone.clenner.ui.fragment.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainFragment(override var layId: Int = R.layout.fragment_main) : BaseFragment<FragmentMainBinding>() {
+class MemoryCleaningFragment(override var layId: Int = R.layout.fragment_main) : BaseFragment<FragmentMainBinding>() {
 
     companion object {
-        const val TAG = "MainFragment"
+        const val TAG = "MemoryCleaningFragment"
     }
 
     override fun setup(savedInstanceState: Bundle?) {
