@@ -44,11 +44,11 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
     }
 
     private fun setupDefaultValues() {
-        CreateOrUpdateNotificationWorker.start(this)
-        CreatePushNotificationWorker.start(this)
-
-        if (!prefs.isSendedDataAfterFirstOpen) {
-            SendFirstOpenByUserWorker.start(this)
-        }
+//        CreateOrUpdateNotificationWorker.start(this)
+//        CreatePushNotificationWorker.start(this)
+//
+//        if (!prefs.isSendedDataAfterFirstOpen) {
+//            SendFirstOpenByUserWorker.start(this)
+//        }
     }
 }

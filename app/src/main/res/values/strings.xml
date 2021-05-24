@@ -1,3 +1,29 @@
 <resources>
+
     <string name="app_name">Smart Cleaner Light</string>
+
+    <string name="system_cleaning">System Cleaning</string>
+    <string name="memory_cleaning">Memory Cleaning</string>
+    <string name="battery_optimization">Battery Optimization</string>
+    <string name="cpu_cooling">CPU Cooling</string>
+
+    <string name="mb" translatable="false">MB</string>
+
+    <string name="cashe_memory">Cashe Memory</string>
+    <string name="temporary_files">Temporary Files</string>
+    <string name="total_memory">Total Memory</string>
+    <string name="usage_memory">Usage Memory</string>
+    <string name="residual_files">Residual Files</string>
+
+    <string name="start">Start</string>
+    <string name="consumed">Consumed</string>
+
+    <string name="normal">Normal</string>
+    <string name="high">High</string>
+    <string name="maximum">Maximum</string>
+
+    <string name="five_hours">5 hours</string>
+    <string name="nine_hours">9 hours</string>
+    <string name="fourteen_hours">14 hours</string>
+
 </resources>

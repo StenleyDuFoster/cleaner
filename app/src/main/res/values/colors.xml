@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <color name="pacific_blue">#00A8C6</color>
-    <color name="shakespeare">#40C0CB</color>
-    <color name="quarter_spanish_white">#F9F2E7</color>
-    <color name="conifer">#AEE239</color>
-    <color name="pistachio">#8FBE00</color>
-    
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
+
+    <color name="green_main">#03CC9C</color>
+    <color name="blue_main">#0080FF</color>
+    <color name="purple_main">#743BED</color>
+    <color name="purple_normal">#AD45FF</color>
+    <color name="purple_high">#743BED</color>
+    <color name="purple_maximum">#2D12D3</color>
+    <color name="pink_main">#F54987</color>
+    <color name="gray_main">#6B849D</color>
+    <color name="transparent_50">#99FFFFFF</color>
 
 </resources>

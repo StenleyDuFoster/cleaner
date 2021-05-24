@@ -16,8 +16,7 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingBottom="56dp" />
+            android:layout_weight="1" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
