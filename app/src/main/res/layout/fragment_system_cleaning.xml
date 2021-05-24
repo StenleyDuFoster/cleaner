@@ -36,7 +36,7 @@
         <ImageView
             android:id="@+id/progress_bg"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:src="@drawable/ic_system_cleaning_progress_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,40 +56,45 @@
 
             <com.mikhaellopez.circularprogressbar.CircularProgressBar
                 android:id="@+id/progress"
-                android:layout_margin="5dp"
-                app:cpb_progress="80"
-                app:cpb_round_border="true"
-                app:cpb_background_progressbar_color="@color/transparent_50"
-                app:cpb_progressbar_color="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                app:cpb_background_progressbar_color="@color/transparent_50"
+                app:cpb_progress="80"
+                app:cpb_progressbar_color="@color/white"
+                app:cpb_round_border="true" />
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            
-            <TextView
-                android:layout_gravity="center"
-                android:elevation="1dp"
-                style="@style/CardExtraText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="142"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/cardCasheTitleText"
-                app:layout_constraintStart_toStartOf="@id/cardCasheTitleText"
-                app:layout_constraintTop_toBottomOf="@id/cardCasheTitleText" />
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CardExtraText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="1dp"
+                    android:text="142"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/cardCasheTitleText"
+                    app:layout_constraintStart_toStartOf="@id/cardCasheTitleText"
+                    app:layout_constraintTop_toBottomOf="@id/cardCasheTitleText" />
 
                 <TextView
                     style="@style/CardTitleText"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="2dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_extra_bold"
+                    android:layout_gravity="bottom"
                     android:layout_marginStart="5dp"
-                    android:text="@string/mb" />
+                    android:text="@string/mb"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 

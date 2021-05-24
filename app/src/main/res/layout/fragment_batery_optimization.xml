@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -7,7 +9,260 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:background="@color/white">
+
+        <TextView
+            android:id="@+id/titleText"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/battery_optimization"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/langSwitch"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="30dp"
+            android:src="@drawable/ic_us_lang"
+            app:layout_constraintBottom_toBottomOf="@+id/titleText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/progress_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="350dp"
+            android:src="@drawable/ic_batery_optimizatpr_progress_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleText" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:translationZ="5dp"
+            app:cardBackgroundColor="@color/purple_main"
+            app:cardCornerRadius="90dp"
+            app:cardElevation="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/progress_bg"
+            app:layout_constraintEnd_toEndOf="@+id/progress_bg"
+            app:layout_constraintStart_toStartOf="@+id/progress_bg"
+            app:layout_constraintTop_toBottomOf="@+id/titleText">
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                app:cpb_background_progressbar_color="@color/transparent_50"
+                app:cpb_progress="80"
+                app:cpb_progressbar_color="@color/white"
+                app:cpb_round_border="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CardExtraText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="1dp"
+                    android:text="142"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/cardCasheTitleText"
+                    app:layout_constraintStart_toStartOf="@id/cardCasheTitleText"
+                    app:layout_constraintTop_toBottomOf="@id/cardCasheTitleText" />
+
+                <TextView
+                    style="@style/CardTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/nunito_sans_extra_bold"
+                    android:text="@string/mb"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/normalCardText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginEnd="2dp"
+            app:cardBackgroundColor="@color/purple_maximum"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/maximumCardSubText"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progress_bg"
+            app:shapeAppearanceOverlay="@style/ShapeCardLeft">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/maximum" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/normalCardSubText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="44dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/highCardSubText"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/maximumCardText"
+            app:layout_constraintTop_toBottomOf="@+id/progress_bg"
+            app:shapeAppearanceOverlay="@style/ShapeCardRight"
+            app:strokeColor="@color/purple_maximum"
+            app:strokeWidth="1dp">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/fourteen_hours"
+                android:textColor="@color/purple_maximum" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/highCardText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginEnd="2dp"
+            app:cardBackgroundColor="@color/purple_maximum"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/maximumCardSubText"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progress_bg"
+            app:shapeAppearanceOverlay="@style/ShapeCardLeft">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/maximum" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/highCardSubText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="44dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/maximumCardSubText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/maximumCardText"
+            app:layout_constraintTop_toBottomOf="@+id/normalCardSubText"
+            app:shapeAppearanceOverlay="@style/ShapeCardRight"
+            app:strokeColor="@color/purple_maximum"
+            app:strokeWidth="1dp">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/fourteen_hours"
+                android:textColor="@color/purple_maximum" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/maximumCardText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginEnd="2dp"
+            app:cardBackgroundColor="@color/purple_maximum"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/maximumCardSubText"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progress_bg"
+            app:shapeAppearanceOverlay="@style/ShapeCardLeft">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/maximum" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/maximumCardSubText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="44dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/maximumCardText"
+            app:layout_constraintTop_toBottomOf="@+id/highCardSubText"
+            app:shapeAppearanceOverlay="@style/ShapeCardRight"
+            app:strokeColor="@color/purple_maximum"
+            app:strokeWidth="1dp">
+
+            <TextView
+                style="@style/NormalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/fourteen_hours"
+                android:textColor="@color/purple_maximum" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

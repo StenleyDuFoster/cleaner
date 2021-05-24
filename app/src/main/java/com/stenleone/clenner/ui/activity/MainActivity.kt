@@ -32,6 +32,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
         binding.apply {
             pager.adapter = viewPagerAdapter
             pager.isUserInputEnabled = false
+            pager.offscreenPageLimit = 4
             BindViewPager(pager).withBottomNav(bottomNav)
         }
     }
