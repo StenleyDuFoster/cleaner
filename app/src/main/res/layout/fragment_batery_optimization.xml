@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
                 app:cpb_background_progressbar_color="@color/transparent_50"
-                app:cpb_progress="80"
+                app:cpb_progress="0"
                 app:cpb_progressbar_color="@color/white"
                 app:cpb_round_border="true" />
 
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:elevation="1dp"
-                    android:text="142"
+                    android:text="0"
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -92,7 +92,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="2dp"
                     android:fontFamily="@font/nunito_sans_extra_bold"
-                    android:text="@string/mb"
+                    android:text="@string/hours"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -106,10 +106,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
-            android:layout_marginEnd="2dp"
-            app:cardBackgroundColor="@color/purple_maximum"
+            android:layout_marginEnd="4dp"
+            app:cardBackgroundColor="@color/purple_normal"
             app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/highCardText"
             app:layout_constraintEnd_toStartOf="@+id/maximumCardSubText"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +123,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/maximum" />
+                android:text="@string/normal" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -134,13 +134,13 @@
             android:layout_marginEnd="44dp"
             app:cardBackgroundColor="@color/white"
             app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/highCardSubText"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toEndOf="@+id/maximumCardText"
             app:layout_constraintTop_toBottomOf="@+id/progress_bg"
             app:shapeAppearanceOverlay="@style/ShapeCardRight"
-            app:strokeColor="@color/purple_maximum"
+            app:strokeColor="@color/purple_normal"
             app:strokeWidth="1dp">
 
             <TextView
@@ -150,8 +150,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/fourteen_hours"
-                android:textColor="@color/purple_maximum" />
+                android:text="@string/five_hours"
+                android:textColor="@color/purple_normal" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -160,14 +160,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
-            android:layout_marginEnd="2dp"
-            app:cardBackgroundColor="@color/purple_maximum"
+            android:layout_marginEnd="4dp"
+            app:cardBackgroundColor="@color/purple_high"
             app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/maximumCardText"
             app:layout_constraintEnd_toStartOf="@+id/maximumCardSubText"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progress_bg"
+            app:layout_constraintTop_toBottomOf="@+id/normalCardText"
             app:shapeAppearanceOverlay="@style/ShapeCardLeft">
 
             <TextView
@@ -177,7 +177,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/maximum" />
+                android:text="@string/high" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -194,7 +194,7 @@
             app:layout_constraintStart_toEndOf="@+id/maximumCardText"
             app:layout_constraintTop_toBottomOf="@+id/normalCardSubText"
             app:shapeAppearanceOverlay="@style/ShapeCardRight"
-            app:strokeColor="@color/purple_maximum"
+            app:strokeColor="@color/purple_high"
             app:strokeWidth="1dp">
 
             <TextView
@@ -204,8 +204,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/fourteen_hours"
-                android:textColor="@color/purple_maximum" />
+                android:text="@string/nine_hours"
+                android:textColor="@color/purple_high" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -221,7 +221,7 @@
             app:layout_constraintEnd_toStartOf="@+id/maximumCardSubText"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progress_bg"
+            app:layout_constraintTop_toBottomOf="@+id/highCardText"
             app:shapeAppearanceOverlay="@style/ShapeCardLeft">
 
             <TextView

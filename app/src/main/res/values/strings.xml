@@ -26,4 +26,6 @@
     <string name="nine_hours">9 hours</string>
     <string name="fourteen_hours">14 hours</string>
 
+    <string name="hours">HOURS</string>
+
 </resources>
