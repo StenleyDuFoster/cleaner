@@ -28,6 +28,8 @@
             android:authorities="${applicationId}.workmanager-init"
             tools:node="remove"/>
 
+        <service android:name=".services.CleanService"/>
+
     </application>
 
 </manifest>
