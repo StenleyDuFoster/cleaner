@@ -12,20 +12,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SystemCleaningFragment(override var layId: Int = R.layout.fragment_system_cleaning) : BaseFragment<FragmentSystemCleaningBinding>() {
 
-    @Inject
-    lateinit var manager: SystemCleaningManager
-
     companion object {
         const val TAG = "SystemCleaningFragment"
     }
 
     override fun setup(savedInstanceState: Bundle?) {
 
-
-        manager.deleteCache()
-
-        manager.searchCache {
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-        }
     }
 }
