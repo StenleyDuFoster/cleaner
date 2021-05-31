@@ -3,7 +3,7 @@ package com.stenleone.clenner.util.bind
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.stenleone.clenner.R
-import com.stenleone.clenner.ui.adapters.FragmentsAdapter
+import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 
 class BindViewPager(private val pager: ViewPager2) {
 

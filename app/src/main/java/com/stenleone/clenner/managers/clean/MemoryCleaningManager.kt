@@ -5,6 +5,7 @@ import android.content.Context
 import com.stenleone.clenner.interfaces.CleaningManager
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.model.MemoryCleaningStateData
+import com.stenleone.clenner.util.constans.AppConstant.BYTES_PER_MB
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
@@ -13,10 +14,6 @@ import kotlin.random.Random
 
 
 class MemoryCleaningManager @Inject constructor(@ApplicationContext private val context: Context, private val pref: SharedPreferences) : CleaningManager {
-
-    companion object {
-        private const val BYTES_PER_MB = 1048576L
-    }
 
     override fun getData(): MemoryCleaningStateData {
         val memoryInfo = ActivityManager.MemoryInfo()

@@ -16,7 +16,7 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 
-class BateryCleaningManager @Inject constructor(@ApplicationContext private val context: Context) {
+class BatteryCleaningManager @Inject constructor(@ApplicationContext private val context: Context) {
 
     fun clean(cleanType: BatteryClean) = flow {
 

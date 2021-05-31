@@ -5,11 +5,8 @@ import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityMainBinding
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.ui.activity.base.BaseActivity
-import com.stenleone.clenner.ui.adapters.FragmentsAdapter
+import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
-import com.stenleone.clenner.worker.CreateOrUpdateNotificationWorker
-import com.stenleone.clenner.worker.CreatePushNotificationWorker
-import com.stenleone.clenner.worker.SendFirstOpenByUserWorker
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

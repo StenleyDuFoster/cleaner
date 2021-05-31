@@ -1,6 +1,5 @@
 package com.stenleone.clenner.ui.fragment.base
 
-import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import com.stenleone.clenner.util.extencial.hideKeyboard
-import kotlin.random.Random
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 

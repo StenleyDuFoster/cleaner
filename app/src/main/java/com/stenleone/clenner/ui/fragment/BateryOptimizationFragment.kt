@@ -8,7 +8,7 @@ import android.provider.Settings
 import androidx.lifecycle.lifecycleScope
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.FragmentBateryOptimizationBinding
-import com.stenleone.clenner.managers.clean.BateryCleaningManager
+import com.stenleone.clenner.managers.clean.BatteryCleaningManager
 import com.stenleone.clenner.ui.fragment.base.BaseFragmentWithCleanProgressLogic
 import com.stenleone.clenner.util.enum.BatteryClean
 import com.stenleone.stanleysfilm.util.extencial.throttleClicks
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_batery_optimization) : BaseFragmentWithCleanProgressLogic<FragmentBateryOptimizationBinding>() {
 
     @Inject
-    lateinit var bateryCleaningManager: BateryCleaningManager
+    lateinit var batteryCleaningManager: BatteryCleaningManager
 
     companion object {
         const val TAG = "BateryOptimizationFragment"
@@ -37,12 +37,12 @@ class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_bat
     private fun setupClicks() {
         binding.apply {
             normalButton.throttleClicks({
-                doIfCanWriteSetings({
+                doIfCanWriteSettings({
                     lifecycleScope.launch {
                         animateProgress(0, binding.progress)
                         blockButtons()
                         delay(400)
-                        bateryCleaningManager.clean(BatteryClean.Normal).collect {
+                        batteryCleaningManager.clean(BatteryClean.Normal).collect {
                             animateProgress(it, binding.progress)
                             setHoursByProgress(it, 5)
                         }
@@ -50,13 +50,13 @@ class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_bat
                 })
             }, lifecycleScope)
             highButton.throttleClicks({
-                doIfCanWriteSetings({
+                doIfCanWriteSettings({
                     blockButtons()
                     lifecycleScope.launch {
                         animateProgress(0, binding.progress)
                         blockButtons()
                         delay(400)
-                        bateryCleaningManager.clean(BatteryClean.High).collect {
+                        batteryCleaningManager.clean(BatteryClean.High).collect {
                             animateProgress(it, binding.progress)
                             setHoursByProgress(it, 9)
                         }
@@ -64,13 +64,13 @@ class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_bat
                 })
             }, lifecycleScope)
             maximumButton.throttleClicks({
-                doIfCanWriteSetings({
+                doIfCanWriteSettings({
                     blockButtons()
                     lifecycleScope.launch {
                         animateProgress(0, binding.progress)
                         blockButtons()
                         delay(400)
-                        bateryCleaningManager.clean(BatteryClean.Maximum).collect {
+                        batteryCleaningManager.clean(BatteryClean.Maximum).collect {
                             animateProgress(it, binding.progress)
                             setHoursByProgress(it, 14)
                         }
@@ -81,15 +81,13 @@ class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_bat
     }
 
     private fun setHoursByProgress(progress: Int, maxHours: Int) {
-        if (progress != 0) {
-            binding.hoursText.text = (maxHours - (maxHours / (progress / 10))).toString()
-        }
+        binding.hoursText.text = (maxHours - ((maxHours / (progress + 1) + 1))).toString()
         if (progress == 100) {
             binding.hoursText.text = maxHours.toString()
         }
     }
 
-    private fun doIfCanWriteSetings(runCode: () -> Unit) {
+    private fun doIfCanWriteSettings(runCode: () -> Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.System.canWrite(requireContext())) {
             runCode()
         } else {

@@ -1,4 +1,4 @@
-package com.stenleone.clenner.ui.adapters
+package com.stenleone.clenner.ui.adapters.pager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
