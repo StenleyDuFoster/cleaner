@@ -6,6 +6,6 @@ interface CleaningManager {
 
     fun getData(): CleanData
     fun clean(): Flow<Int>
-    fun cleanSuccess()
+    fun cleanSuccess() = Unit
 
 }
