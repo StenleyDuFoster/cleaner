@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="data"
+            type="com.stenleone.clenner.model.MemoryCleaningStateData" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,39 +68,53 @@
                 app:cpb_progressbar_color="@color/white"
                 app:cpb_round_border="true" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
+                    style="@style/AdditionalTextCard"
+                    android:text="@string/consumed"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/consumedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/textConsumedInMb"
+                    app:layout_constraintEnd_toStartOf="@+id/mbProgressText"
+                    app:layout_constraintStart_toStartOf="@+id/textConsumedInMb" />
+
+                <TextView
+                    android:id="@+id/textConsumedInMb"
                     style="@style/CardExtraText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:elevation="1dp"
-                    android:text="0"
+                    android:text="@{String.valueOf(data.consumedMemory)}"
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/cardCasheTitleText"
-                    app:layout_constraintStart_toStartOf="@id/cardCasheTitleText"
-                    app:layout_constraintTop_toBottomOf="@id/cardCasheTitleText" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/mbProgressText"
                     style="@style/CardTitleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="2dp"
                     android:fontFamily="@font/nunito_sans_extra_bold"
                     android:text="@string/mb"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textConsumedInMb"
+                    app:layout_constraintStart_toEndOf="@+id/textConsumedInMb"
+                    app:layout_constraintTop_toTopOf="@+id/textConsumedInMb" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -136,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="10dp"
-                    android:text="0"
+                    android:text="@{String.valueOf(data.totalMemory)}"
                     android:textColor="@color/blue_main"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/cardTotalMemoryText"
@@ -193,7 +211,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="10dp"
-                    android:text="0"
+                    android:text="@{String.valueOf(data.usageProcent)}"
                     android:textColor="@color/blue_main"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/cardResidualFilesText"
@@ -206,7 +224,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="@string/mb"
+                    android:text="%"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/cardResidualFilesMainText"
                     app:layout_constraintTop_toBottomOf="@+id/cardResidualFilesText" />

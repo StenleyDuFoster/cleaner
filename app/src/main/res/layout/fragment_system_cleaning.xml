@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="data"
+            type="com.stenleone.clenner.model.SystemCleaningStateData" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:elevation="1dp"
-                    android:text="0"
+                    android:text="@{String.valueOf(data.getTotalMb())}"
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -138,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="10dp"
-                    android:text="0"
+                    android:text="@{String.valueOf(data.systemGarbageMb)}"
                     android:textColor="@color/green_main"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/cardCasheTitleText"
@@ -197,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="10dp"
-                    android:text="0"
+                    android:text="@{String.valueOf(data.temporaryFilesMb)}"
                     android:textColor="@color/green_main"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/cardTemporaryFilesText"
@@ -255,7 +259,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="10dp"
-                    android:text="0"
+                    android:text="@{String.valueOf(data.residualFilesMb)}"
                     android:textColor="@color/green_main"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/cardTotalMemoryText"
@@ -312,7 +316,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="10dp"
-                    android:text="0"
+                    android:text="@{String.valueOf(data.residualFilesMb)}"
                     android:textColor="@color/green_main"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/cardResidualFilesText"

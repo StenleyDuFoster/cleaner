@@ -31,6 +31,12 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="AdditionalTextCard">
+        <item name="fontFamily">@font/nunito_sans_semi_bold</item>
+        <item name="android:textColor">@color/additional_blue</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="CardExtraText">
         <item name="android:textStyle">normal</item>
         <item name="fontFamily">@font/nunito_sans_extra_bold</item>
