@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_batery_optimization) : BaseFragmentWithCleanProgressLogic<FragmentBateryOptimizationBinding>() {
+class BatteryOptimizationFragment(override var layId: Int = R.layout.fragment_batery_optimization) : BaseFragmentWithCleanProgressLogic<FragmentBateryOptimizationBinding>() {
 
     @Inject
     lateinit var batteryCleaningManager: BatteryCleaningManager
@@ -37,7 +37,7 @@ class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_bat
     private fun setupClicks() {
         binding.apply {
             normalButton.throttleClicks({
-                doIfCanWriteSettings({
+                doIfCanWriteSettings {
                     lifecycleScope.launch {
                         animateProgress(0, binding.progress)
                         blockButtons()
@@ -47,10 +47,10 @@ class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_bat
                             setHoursByProgress(it, 5)
                         }
                     }
-                })
+                }
             }, lifecycleScope)
             highButton.throttleClicks({
-                doIfCanWriteSettings({
+                doIfCanWriteSettings {
                     blockButtons()
                     lifecycleScope.launch {
                         animateProgress(0, binding.progress)
@@ -61,10 +61,10 @@ class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_bat
                             setHoursByProgress(it, 9)
                         }
                     }
-                })
+                }
             }, lifecycleScope)
             maximumButton.throttleClicks({
-                doIfCanWriteSettings({
+                doIfCanWriteSettings {
                     blockButtons()
                     lifecycleScope.launch {
                         animateProgress(0, binding.progress)
@@ -75,7 +75,7 @@ class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_bat
                             setHoursByProgress(it, 14)
                         }
                     }
-                })
+                }
             }, lifecycleScope)
         }
     }
@@ -88,7 +88,7 @@ class BateryOptimizationFragment(override var layId: Int = R.layout.fragment_bat
     }
 
     private fun doIfCanWriteSettings(runCode: () -> Unit) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.System.canWrite(requireContext())) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.System.canWrite(requireContext())) { // todo
             runCode()
         } else {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)

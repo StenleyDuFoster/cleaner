@@ -16,6 +16,7 @@ class SharedPreferences @Inject constructor(@ApplicationContext private val cont
         private const val SENDED_DATA_AFTER_FIRST_OPEN = "sended_data_after_first_open"
         private const val LAST_SYSTEM_CLEAN_DATE = "last_system_clean_date"
         private const val LAST_MEMORY_CLEAN_DATE = "last_memory_clean_date"
+        private const val LAST_CPU_CLEAN_DATE = "last_cpu_clean_date"
 
         const val CLEAN_DELAY_IN_HOUR = 4
     }
@@ -35,20 +36,7 @@ class SharedPreferences @Inject constructor(@ApplicationContext private val cont
     var isSystemClean: Boolean
         get() {
             val oldCleanMillis = sharedPreferences.getString(LAST_SYSTEM_CLEAN_DATE, null)
-
-            if (oldCleanMillis == null) {
-                return false
-            }
-
-            val cleanDate = Calendar.getInstance().also {
-                it.time = Date(oldCleanMillis.toLong())
-            }
-
-            val cleanDateWithDelay = cleanDate.also {
-                it.add(Calendar.HOUR, CLEAN_DELAY_IN_HOUR)
-            }
-
-            return cleanDateWithDelay.time.time > System.currentTimeMillis()
+            return getBooleanByOldTime(oldCleanMillis)
         }
         set(value) {
             sharedPreferences.edit {
@@ -59,24 +47,38 @@ class SharedPreferences @Inject constructor(@ApplicationContext private val cont
     var isMemoryClean: Boolean
         get() {
             val oldCleanMillis = sharedPreferences.getString(LAST_MEMORY_CLEAN_DATE, null)
-
-            if (oldCleanMillis == null) {
-                return false
-            }
-
-            val cleanDate = Calendar.getInstance().also {
-                it.time = Date(oldCleanMillis.toLong())
-            }
-
-            val cleanDateWithDelay = cleanDate.also {
-                it.add(Calendar.HOUR, CLEAN_DELAY_IN_HOUR)
-            }
-
-            return cleanDateWithDelay.time.time > System.currentTimeMillis()
+            return getBooleanByOldTime(oldCleanMillis)
         }
         set(value) {
             sharedPreferences.edit {
                 putString(LAST_MEMORY_CLEAN_DATE, System.currentTimeMillis().toString())
             }
         }
+
+    var isCpuClean: Boolean
+        get() {
+            val oldCleanMillis = sharedPreferences.getString(LAST_CPU_CLEAN_DATE, null)
+            return getBooleanByOldTime(oldCleanMillis)
+        }
+        set(value) {
+            sharedPreferences.edit {
+                putString(LAST_CPU_CLEAN_DATE, System.currentTimeMillis().toString())
+            }
+        }
+
+    private fun getBooleanByOldTime(oldTimeMillis: String?): Boolean {
+        if (oldTimeMillis == null) {
+            return false
+        }
+
+        val cleanDate = Calendar.getInstance().also {
+            it.time = Date(oldTimeMillis.toLong())
+        }
+
+        val cleanDateWithDelay = cleanDate.also {
+            it.add(Calendar.HOUR, CLEAN_DELAY_IN_HOUR)
+        }
+
+        return cleanDateWithDelay.time.time > System.currentTimeMillis()
+    }
 }

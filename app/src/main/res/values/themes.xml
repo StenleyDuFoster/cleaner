@@ -10,6 +10,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!--  TextView  -->
+
     <style name="TitleText">
         <item name="android:textStyle">bold</item>
         <item name="fontFamily">@font/poppins_semi_bold</item>
@@ -42,6 +44,27 @@
         <item name="fontFamily">@font/nunito_sans_extra_bold</item>
         <item name="android:textSize">22sp</item>
     </style>
+
+    <style name="ItemStandartText" parent="SingleLineText">
+        <item name="android:textStyle">normal</item>
+        <item name="fontFamily">@font/nunito_sans_semi_bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/gray_main</item>
+    </style>
+
+    <style name="ItemMainText" parent="SingleLineText">
+        <item name="fontFamily">@font/nunito_sans_semi_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/pink_main</item>
+    </style>
+
+    <style name="SingleLineText">
+        <item name="singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!--  CardView  -->
 
     <style name="ShapeCardLeft">
         <item name="cornerFamily">rounded</item>

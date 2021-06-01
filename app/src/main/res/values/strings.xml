@@ -8,6 +8,7 @@
     <string name="cpu_cooling">CPU Cooling</string>
 
     <string name="mb" translatable="false">MB</string>
+    <string name="mb_lower_case" translatable="false">Mb</string>
 
     <string name="cashe_memory">Cashe Memory</string>
     <string name="temporary_files">Temporary Files</string>
@@ -17,6 +18,8 @@
 
     <string name="start">Start</string>
     <string name="consumed">CONSUMED</string>
+    <string name="temperature_normal">NORMAL</string>
+    <string name="temperature_high">HIGH</string>
 
     <string name="normal">Normal</string>
     <string name="high">High</string>

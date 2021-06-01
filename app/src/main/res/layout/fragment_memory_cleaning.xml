@@ -40,7 +40,7 @@
         <ImageView
             android:id="@+id/progress_bg"
             android:layout_width="wrap_content"
-            android:layout_height="350dp"
+            android:layout_height="300dp"
             android:src="@drawable/ic_memory_cleaning_progress_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,12 +75,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    style="@style/AdditionalTextCard"
-                    android:text="@string/consumed"
-                    android:layout_marginBottom="10dp"
                     android:id="@+id/consumedText"
+                    style="@style/AdditionalTextCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/consumed"
                     app:layout_constraintBottom_toTopOf="@+id/textConsumedInMb"
                     app:layout_constraintEnd_toStartOf="@+id/mbProgressText"
                     app:layout_constraintStart_toStartOf="@+id/textConsumedInMb" />
@@ -98,7 +98,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2202" />
 
                 <TextView
                     android:id="@+id/mbProgressText"
@@ -106,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
+                    android:layout_marginTop="9dp"
                     android:fontFamily="@font/nunito_sans_extra_bold"
                     android:text="@string/mb"
                     android:textColor="@color/white"

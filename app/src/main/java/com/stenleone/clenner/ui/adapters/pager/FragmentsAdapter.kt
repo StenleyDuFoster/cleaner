@@ -3,7 +3,7 @@ package com.stenleone.clenner.ui.adapters.pager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.stenleone.clenner.ui.fragment.BateryOptimizationFragment
+import com.stenleone.clenner.ui.fragment.BatteryOptimizationFragment
 import com.stenleone.clenner.ui.fragment.CpuCoolingFragment
 import com.stenleone.clenner.ui.fragment.MemoryCleaningFragment
 import com.stenleone.clenner.ui.fragment.SystemCleaningFragment
@@ -15,7 +15,7 @@ class FragmentsAdapter(
     val listFragments: ArrayList<Fragment> = arrayListOf(
         SystemCleaningFragment(),
         MemoryCleaningFragment(),
-        BateryOptimizationFragment(),
+        BatteryOptimizationFragment(),
         CpuCoolingFragment()
     )
 
