@@ -14,6 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         tools:background="@color/white">
 
         <TextView
@@ -45,6 +46,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleText" />
+
+        <TextView
+            style="@style/NormalText"
+            android:textColor="@color/blue_main"
+            android:text="@string/cleaning_in_process"
+            android:visibility="gone"
+            android:id="@+id/cleanInProcessText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/progress_bg"
+            app:layout_constraintEnd_toEndOf="@+id/progress_bg"
+            app:layout_constraintStart_toStartOf="@+id/progress_bg"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="180dp"

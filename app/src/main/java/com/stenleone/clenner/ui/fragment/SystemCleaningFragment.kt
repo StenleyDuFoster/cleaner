@@ -1,6 +1,7 @@
 package com.stenleone.clenner.ui.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.FragmentSystemCleaningBinding
@@ -33,10 +34,22 @@ class SystemCleaningFragment(override var layId: Int = R.layout.fragment_system_
                 start.isClickable = false
                 lifecycleScope.launch {
                     systemCleaningManager.clean().collect {
+                        setCleanText(it)
                         animateProgress(it, binding.progress)
                     }
                 }
             }, lifecycleScope)
+        }
+    }
+
+    private fun setCleanText(progress: Int) {
+        binding.apply {
+            cleanInProcessText.visibility = if (progress != 100) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+            cleanInProcessText.text = getString(R.string.cleaning_in_process, progress.toString())
         }
     }
 

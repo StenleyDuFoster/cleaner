@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.FragmentBateryOptimizationBinding
@@ -43,6 +44,7 @@ class BatteryOptimizationFragment(override var layId: Int = R.layout.fragment_ba
                         blockButtons()
                         delay(400)
                         batteryCleaningManager.clean(BatteryClean.Normal).collect {
+                            setCleanText(it)
                             animateProgress(it, binding.progress)
                             setHoursByProgress(it, 5)
                         }
@@ -57,6 +59,7 @@ class BatteryOptimizationFragment(override var layId: Int = R.layout.fragment_ba
                         blockButtons()
                         delay(400)
                         batteryCleaningManager.clean(BatteryClean.High).collect {
+                            setCleanText(it)
                             animateProgress(it, binding.progress)
                             setHoursByProgress(it, 9)
                         }
@@ -71,6 +74,7 @@ class BatteryOptimizationFragment(override var layId: Int = R.layout.fragment_ba
                         blockButtons()
                         delay(400)
                         batteryCleaningManager.clean(BatteryClean.Maximum).collect {
+                            setCleanText(it)
                             animateProgress(it, binding.progress)
                             setHoursByProgress(it, 14)
                         }
@@ -110,6 +114,17 @@ class BatteryOptimizationFragment(override var layId: Int = R.layout.fragment_ba
             normalButton.isClickable = true
             highButton.isClickable = true
             maximumButton.isClickable = true
+        }
+    }
+
+    private fun setCleanText(progress: Int) {
+        binding.apply {
+            cleanInProcessText.visibility = if (progress != 100) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+            cleanInProcessText.text = getString(R.string.cleaning_in_process, progress.toString())
         }
     }
 

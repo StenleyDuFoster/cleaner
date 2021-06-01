@@ -66,6 +66,8 @@ class SharedPreferences @Inject constructor(@ApplicationContext private val cont
             }
         }
 
+    // support
+
     private fun getBooleanByOldTime(oldTimeMillis: String?): Boolean {
         if (oldTimeMillis == null) {
             return false

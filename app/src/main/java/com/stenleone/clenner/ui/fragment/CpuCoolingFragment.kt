@@ -1,6 +1,7 @@
 package com.stenleone.clenner.ui.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.FragmentCpuCoolingBinding
@@ -32,17 +33,29 @@ class CpuCoolingFragment(override var layId: Int = R.layout.fragment_cpu_cooling
     private fun setupClicks() {
         binding.apply {
 
-            start.setOnClickListener {
+            start.setOnClickListener { button ->
 
-                it.isClickable = false
+                button.isClickable = false
                 lifecycleScope.launch {
                     animateProgress(0, binding.progress)
                     delay(400)
                     cpuCleaningManager.clean().collect {
+                        setCleanText(it)
                         animateProgress(it, binding.progress)
                     }
                 }
             }
+        }
+    }
+
+    private fun setCleanText(progress: Int) {
+        binding.apply {
+            cleanInProcessText.visibility = if (progress != 100) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+            cleanInProcessText.text = getString(R.string.cleaning_in_process, progress.toString())
         }
     }
 

@@ -2,46 +2,11 @@ package com.stenleone.stanleysfilm.util.extencial
 
 import android.view.View
 import androidx.annotation.CheckResult
-import com.stenleone.clenner.util.constans.BindingConstan.SMALL_THROTTLE
+import com.stenleone.clenner.util.constans.BindingConstant.SMALL_THROTTLE
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
-import java.util.*
-
-fun <T> Flow<T>.throttleLatest(periodMillis: Long): Flow<T> {
-    return channelFlow {
-        var lastValue: T?
-        var timer: Timer? = null
-        onCompletion { timer?.cancel() }
-        collect { value ->
-            lastValue = value
-
-            if (timer == null) {
-                timer = Timer()
-                timer?.scheduleAtFixedRate(
-                    object : TimerTask() {
-                        override fun run() {
-                            val value = lastValue
-                            lastValue = null
-                            if (value != null) {
-                                launch {
-                                    send(value as T)
-                                }
-                            } else {
-                                timer?.cancel()
-                                timer = null
-                            }
-                        }
-                    },
-                    0,
-                    periodMillis
-                )
-            }
-        }
-    }
-}
 
 fun <T> Flow<T>.throttleFirst(periodMillis: Long): Flow<T> {
     require(periodMillis > 0) { "period should be positive" }

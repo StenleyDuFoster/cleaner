@@ -3,15 +3,8 @@ package com.stenleone.clenner.util.bind
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.stenleone.clenner.R
-import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 
 class BindViewPager(private val pager: ViewPager2) {
-
-    init {
-        if (pager.adapter !is FragmentsAdapter) {
-            throw RuntimeException("not support view pager")
-        }
-    }
 
     fun withBottomNav(nav: BottomNavigationView) {
         nav.setOnNavigationItemSelectedListener {
