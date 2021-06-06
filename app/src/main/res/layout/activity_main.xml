@@ -7,35 +7,66 @@
 
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:animateLayoutChanges="true">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager"
+        <View
             android:layout_width="match_parent"
-            tools:background="@drawable/load_drawable"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:background="@drawable/load_drawable" />
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
+            android:id="@+id/rootLay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="20dp">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="1dp"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            tools:visibility="visible">
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNav"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:background="@drawable/load_drawable" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@color/white"
-                app:labelVisibilityMode="unlabeled"
-                app:menu="@menu/bottom_nav_menu" />
+                app:cardElevation="20dp">
 
-        </com.google.android.material.card.MaterialCardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
-    </LinearLayout>
+                    <com.google.android.material.bottomnavigation.BottomNavigationView
+                        android:id="@+id/bottomNav"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="@color/white"
+                        app:labelVisibilityMode="unlabeled"
+                        app:menu="@menu/bottom_nav_menu" />
+
+                    <com.appodeal.ads.BannerView
+                        android:id="@+id/appodealBannerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </FrameLayout>
 
 </layout>

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.appodeal.ads.Appodeal
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import com.stenleone.clenner.util.extencial.hideKeyboard
 import kotlin.random.Random
@@ -28,6 +29,9 @@ abstract class BaseFragmentWithCleanProgressLogic<T : ViewDataBinding> : BaseFra
     private fun checkIfCleanFinished(newProgress: Int, animatedProgress: Int) {
         if (newProgress == 100 && animatedProgress == 100) {
             cleanSuccess()
+
+            Appodeal.show(requireActivity(), Appodeal.INTERSTITIAL)
+            Appodeal.cache(requireActivity(), Appodeal.INTERSTITIAL)
         }
     }
 

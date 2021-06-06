@@ -3,16 +3,18 @@ package com.stenleone.clenner.worker
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
+import com.stenleone.clenner.managers.config.Config
+import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.network.ApiService
-import com.stenleone.clenner.util.notification.NotificationBuilder
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
 @HiltWorker
 class SendFirstOpenByUserWorker @AssistedInject constructor(
-//    private val apiService: ApiService,
     private val prefs: SharedPreferences,
+    private val config: ConfigService,
+    private val apiService: ApiService,
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
@@ -37,17 +39,13 @@ class SendFirstOpenByUserWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
 
-        var result = Result.success()
+        return if (apiService.postUserAppOpen(config.getString(Config.POST_USER_DATA_URL)).isSuccessful) {
+            prefs.isSendedDataAfterFirstOpen = true
+            Result.success()
+        } else {
+            Result.failure()
+        }
 
-        val notifyBuilder = NotificationBuilder(
-            context = applicationContext,
-            "title",
-            "sub"
-        )
-
-        notifyBuilder.createCleanNotify()
-
-        return result
     }
 
 }

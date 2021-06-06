@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Smart Cleaner Light</string>
+    <string name="app_name" translatable="false">Smart Cleaner Light</string>
 
     <string name="system_cleaning">System Cleaning</string>
     <string name="memory_cleaning">Memory Cleaning</string>
@@ -32,5 +32,12 @@
     <string name="fourteen_hours">14 hours</string>
 
     <string name="hours">HOURS</string>
+
+    <string name="add_mob_ads_app_id" translatable="false">ca-app-pub-8264479940846781~6690766702</string>
+    <string name="appo_daeal_ads_app_id" translatable="false">021ae3aeb84cb44fdc8c9d02d7d9aa9835ee697255cd6d35</string>
+
+    <string name="add_mob_ads_interstial_id" translatable="false">ca-app-pub-8264479940846781~6690766702</string>
+    <string name="add_mob_ads_banner_id" translatable="false">ca-app-pub-8264479940846781~6690766702</string>
+    <string name="add_mob_ads_native_id" translatable="false">ca-app-pub-8264479940846781~6690766702</string>
 
 </resources>
