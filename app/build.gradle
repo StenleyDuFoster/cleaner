@@ -9,6 +9,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        main {
+            storeFile file('C:\\Users\\Stanley\\AndroidStudio\\jre\\jre\\bin\\cleanner')
+            storePassword 'clean2012'
+            keyAlias 'key0'
+            keyPassword 'clean2012'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -20,6 +28,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.main
     }
 
     buildTypes {
@@ -65,7 +74,8 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.11.0"
     implementation 'com.google.firebase:firebase-crashlytics:17.4.1'
     implementation 'com.google.firebase:firebase-analytics:18.0.3'
-    implementation 'com.google.firebase:firebase-config:20.0.4'//---------------------------------------glide
+    implementation 'com.google.firebase:firebase-config:20.0.4'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'//---------------------------------------glide
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     kapt "com.github.bumptech.glide:compiler:4.11.0"
 

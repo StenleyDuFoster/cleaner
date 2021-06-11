@@ -4,6 +4,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
+    <color name="logo_main_color">#4831D5</color>
 
     <color name="green_main">#03CC9C</color>
     <color name="blue_main">#0080FF</color>

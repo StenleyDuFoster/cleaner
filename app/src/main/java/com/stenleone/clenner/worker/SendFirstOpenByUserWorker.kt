@@ -39,9 +39,15 @@ class SendFirstOpenByUserWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
 
-        return if (apiService.postUserAppOpen(config.getString(Config.POST_USER_DATA_URL)).isSuccessful) {
-            prefs.isSendedDataAfterFirstOpen = true
-            Result.success()
+        val url = config.getStringAsync(Config.POST_USER_DATA_URL)
+        
+         return if (url != null) {
+            if (apiService.postUserAppOpen(url).isSuccessful) {
+                prefs.isSendedDataAfterFirstOpen = true
+                Result.success()
+            } else {
+                Result.failure()
+            }
         } else {
             Result.failure()
         }

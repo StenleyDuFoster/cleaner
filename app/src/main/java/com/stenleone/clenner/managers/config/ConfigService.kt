@@ -8,6 +8,9 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.gson.Gson
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class ConfigService @Inject constructor() {
 
@@ -27,14 +30,20 @@ class ConfigService @Inject constructor() {
 
     fun getInt(config: Config) = firebaseConfig.getLong(config.key).toInt()
 
-    fun getIntAsync(config: Config, success: (Int) -> Unit, failure: (String) -> Unit) {
-        firebaseRemoteConfig.fetchAndActivate()
-            .addOnSuccessListener {
-                firebaseRemoteConfig.getLong(config.key).toInt().let { intValue -> success(intValue) }
-            }
-            .addOnFailureListener {
-                failure(it.message.toString())
-            }
+    suspend fun getIntAsync(config: Config): Int {
+        return suspendCoroutine { continuation ->
+            firebaseRemoteConfig.fetchAndActivate()
+                .addOnSuccessListener {
+                    try {
+                        firebaseRemoteConfig.getLong(config.key).toInt().let { intValue -> continuation.resume(intValue) }
+                    } catch (e: Exception) {
+                        continuation.resume(10)
+                    }
+                }
+                .addOnFailureListener {
+                    continuation.resume(getInt(config))
+                }
+        }
     }
 
 
@@ -54,19 +63,21 @@ class ConfigService @Inject constructor() {
         }
     }
 
-    fun getStringAsync(config: Config, success: (String) -> Unit, failure: (String) -> Unit, vararg replace: String) {
-
-        firebaseRemoteConfig.fetchAndActivate()
-            .addOnSuccessListener {
-                firebaseRemoteConfig.getString(config.key).let { string ->
-                    var result = string
-                    replace.forEach { result = result.replaceFirst("%s", it) }
-                    success(result)
+    suspend fun getStringAsync(config: Config, vararg replace: String): String {
+        return suspendCoroutine { continuation ->
+            firebaseRemoteConfig.fetchAndActivate()
+                .addOnSuccessListener {
+                    firebaseRemoteConfig.getString(config.key).let { string ->
+                        var result = string
+                        replace.forEach { result = result.replaceFirst("%s", it) }
+                        continuation.resume(result)
+                    }
                 }
-            }
-            .addOnFailureListener {
-                failure(it.message.toString())
-            }
+                .addOnFailureListener {
+                    continuation.resume(getString(config))
+                }
+        }
+
     }
 
     fun getBoolean(config: Config) = firebaseConfig.getBoolean(config.key)

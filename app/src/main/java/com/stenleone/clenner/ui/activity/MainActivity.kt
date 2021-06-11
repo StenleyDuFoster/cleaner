@@ -10,10 +10,13 @@ import com.explorestack.consent.Consent.ShouldShow
 import com.explorestack.consent.exception.ConsentManagerException
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityMainBinding
+import com.stenleone.clenner.managers.config.Config
+import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.ui.activity.base.BaseActivity
 import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
+import com.stenleone.clenner.worker.CreatePushNotificationWorker
 import com.stenleone.clenner.worker.SendFirstOpenByUserWorker
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,6 +26,9 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     @Inject
     lateinit var prefs: SharedPreferences
+
+    @Inject
+    lateinit var configString: ConfigService
 
     private lateinit var viewPagerAdapter: FragmentsAdapter
     private var consentForm: ConsentForm? = null
@@ -53,11 +59,11 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     private fun setupDefaultValues() {
 //        CreateOrUpdateNotificationWorker.start(this)
-//        CreatePushNotificationWorker.start(this)
+        CreatePushNotificationWorker.start(this, configString.getInt(Config.SHOW_NOTIFICATION_TIME_IN_HOUR))
 //
-        if (!prefs.isSendedDataAfterFirstOpen) {
-            SendFirstOpenByUserWorker.start(this)
-        }
+//        if (!prefs.isSendedDataAfterFirstOpen) {
+//            SendFirstOpenByUserWorker.start(this)
+//        }
     }
 
     private fun setupConsent() {
