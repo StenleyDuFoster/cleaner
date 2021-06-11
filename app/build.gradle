@@ -28,13 +28,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.main
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.main
         }
     }
 
@@ -91,10 +92,9 @@ dependencies {
 
     api 'tk.zielony:carbon:0.16.0.1'//--------------------------------------------------------------Colored shadows
 
-    implementation ('com.appodeal.ads:sdk:2.10.0.+') {//--------------------------------------------Appodeal ads
-        exclude group: 'com.appodeal.ads.sdk.networks', module: 'adcolony'
-        exclude group: 'com.appodeal.ads.sdk.networks', module: 'vast'
-        exclude group: 'com.appodeal.ads.sdk.networks', module: 'vungle'
-    }
+    implementation 'com.appodeal.ads.sdk:core:2.10.1'
+    implementation 'com.appodeal.ads.sdk.networks:admob:2.10.1.11'
+
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
 }

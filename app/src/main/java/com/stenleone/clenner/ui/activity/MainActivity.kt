@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.BannerCallbacks
+import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityMainBinding
 import com.stenleone.clenner.managers.config.Config
@@ -137,8 +138,13 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
         Appodeal.initialize(this, getString(R.string.appo_daeal_ads_app_id), Appodeal.INTERSTITIAL or Appodeal.NATIVE or Appodeal.BANNER)
 
         Appodeal.disableLocationPermissionCheck()
-//        Appodeal.setBannerViewId(R.id.appodealBannerView)
+        Appodeal.setBannerViewId(R.id.appodealBannerView)
         Appodeal.show(this, Appodeal.BANNER_VIEW)
+
+        if (BuildConfig.DEBUG) {
+            Appodeal.setTesting(true)
+        }
+
         Appodeal.cache(this, Appodeal.INTERSTITIAL)
         Appodeal.cache(this, Appodeal.NATIVE)
         Appodeal.setBannerCallbacks(object : BannerCallbacks {
