@@ -3,18 +3,18 @@
 
     <item
         android:id="@+id/navigation_one"
-        android:icon="@drawable/ic_systeam_cleaning_icons"/>
+        android:icon="@drawable/ic_system_cleaning_icon_un_active"/>
 
     <item
         android:id="@+id/navigation_two"
-        android:icon="@drawable/ic_memory_cleaning_icons" />
+        android:icon="@drawable/ic_memory_cleaning_icon_un_active" />
 
     <item
         android:id="@+id/navigation_three"
-        android:icon="@drawable/ic_batery_optimizatpr_icons" />
+        android:icon="@drawable/ic_batery_optimizator_icon_un_active" />
 
     <item
         android:id="@+id/navigation_four"
-        android:icon="@drawable/ic_cpu_cooling_icons" />
+        android:icon="@drawable/ic_cpu_cooling_icon_un_active" />
 
 </menu>

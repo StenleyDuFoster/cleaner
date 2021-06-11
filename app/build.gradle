@@ -97,6 +97,4 @@ dependencies {
         exclude group: 'com.appodeal.ads.sdk.networks', module: 'vungle'
     }
 
-    implementation 'com.explorestack:consent:1.0.4'//-----------------------------------------------EU consent
-
 }
