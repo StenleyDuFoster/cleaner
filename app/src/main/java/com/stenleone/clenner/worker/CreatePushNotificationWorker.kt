@@ -19,11 +19,12 @@ class CreatePushNotificationWorker @AssistedInject constructor(
 
     companion object {
         const val TAG = "CreatePushNotificationWorker"
+        const val DEF_PUSH_VALUE = "def"
 
         fun start(context: Context, timeShow: Int) {
 
             val workRequest = PeriodicWorkRequestBuilder<CreatePushNotificationWorker>(6, TimeUnit.HOURS)
-                .setInitialDelay(6, TimeUnit.HOURS)
+                .setInitialDelay(timeShow.toLong(), TimeUnit.HOURS)
                 .addTag(TAG)
 
             WorkManager
@@ -38,12 +39,25 @@ class CreatePushNotificationWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
 
-        var result = Result.success()
+        var title = ""
+        var subTitle = ""
 
-        var title = configService.getStringAsync(Config.CLEAN_PUSH_TITLE)
-        var subTitle = configService.getStringAsync(Config.CLEAN_PUSH_SUB_TITLE)
+        when ((0..3).random()) {
+            1 -> {
+                title = configService.getStringAsync(Config.CLEAN_PUSH_TITLE)
+                subTitle = configService.getStringAsync(Config.CLEAN_PUSH_SUB_TITLE)
+            }
+            2 -> {
+                title = configService.getStringAsync(Config.CLEAN_PUSH_TITLE_2)
+                subTitle = configService.getStringAsync(Config.CLEAN_PUSH_SUB_TITLE_2)
+            }
+            3 -> {
+                title = configService.getStringAsync(Config.CLEAN_PUSH_TITLE_3)
+                subTitle = configService.getStringAsync(Config.CLEAN_PUSH_SUB_TITLE_3)
+            }
+        }
 
-        if (title == "def" || subTitle == "def") {
+        if (title == DEF_PUSH_VALUE || subTitle == DEF_PUSH_VALUE) {
             return Result.failure()
         }
 
@@ -55,7 +69,7 @@ class CreatePushNotificationWorker @AssistedInject constructor(
 
         notifyBuilder.createDefaultNotify()
 
-        return result
+        return Result.success()
     }
 
 }

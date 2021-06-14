@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import com.readystatesoftware.chuck.ChuckInterceptor
 import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.network.ApiService
+import com.stenleone.clenner.network.interceptor.PostBackInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +34,7 @@ class NetworkModule {
             .connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+            .addInterceptor(PostBackInterceptor())
 
         if (BuildConfig.DEBUG) {
             client.addInterceptor(ChuckInterceptor(context))

@@ -60,6 +60,8 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="main_channel" />
 
+        <receiver android:name=".receiver.InstallReferrerReceiver"/>
+
     </application>
 
 </manifest>

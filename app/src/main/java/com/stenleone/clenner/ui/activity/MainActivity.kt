@@ -1,7 +1,14 @@
 package com.stenleone.clenner.ui.activity
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.lifecycleScope
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.BannerCallbacks
 import com.stenleone.clenner.BuildConfig
@@ -10,15 +17,22 @@ import com.stenleone.clenner.databinding.ActivityMainBinding
 import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
+import com.stenleone.clenner.receiver.InstallReferrerReceiver
 import com.stenleone.clenner.ui.activity.base.BaseActivity
 import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
 import com.stenleone.clenner.worker.CreatePushNotificationWorker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActivity<ActivityMainBinding>() {
+
+    companion object {
+        const val SAVED_SHOWN_INTERNAL = "saved_isFirstInternalShown"
+    }
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -27,8 +41,14 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
     lateinit var configString: ConfigService
 
     private lateinit var viewPagerAdapter: FragmentsAdapter
+    private var isFirstInternalShown = false
 
     override fun setup(savedInstanceState: Bundle?) {
+        savedInstanceState?.let {
+            it.getBoolean(SAVED_SHOWN_INTERNAL)?.let {
+                isFirstInternalShown = it
+            }
+        }
 
         setupAppoDeal()
         setupViewPagerAndBottomNav()
@@ -54,79 +74,14 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     private fun setupDefaultValues() {
 //        CreateOrUpdateNotificationWorker.start(this)
-        CreatePushNotificationWorker.start(this, configString.getInt(Config.SHOW_NOTIFICATION_TIME_IN_HOUR))
+        lifecycleScope.launch {
+            CreatePushNotificationWorker.start(this@MainActivity, configString.getIntAsync(Config.SHOW_NOTIFICATION_TIME_IN_HOUR))
+        }
 //
-//        if (!prefs.isSendedDataAfterFirstOpen) {
-//            SendFirstOpenByUserWorker.start(this)
-//        }
+        if (!prefs.isSendedDataAfterFirstOpen) {
+            checkPostBack()
+        }
     }
-
-//    private fun setupConsent() {
-//        val consentManager = ConsentManager.getInstance(this)
-//
-//        consentManager.requestConsentInfoUpdate(
-//            getString(R.string.appo_daeal_ads_app_id),
-//            object : ConsentInfoUpdateListener {
-//                override fun onConsentInfoUpdated(consent: Consent) {
-//                    val consentShouldShow = consentManager.shouldShowConsentDialog()
-//                    // If ConsentManager return Consent.ShouldShow.TRUE, than we should show consent form
-//                    if (consentShouldShow == ShouldShow.TRUE) {
-//                        showConsentForm()
-//                    } else {
-//                        if (consent.status == Consent.Status.UNKNOWN) {
-//                            // Start our main activity with default Consent value
-//                            setupAppoDeal(null)
-//                        } else {
-//                            val hasConsent = consent.status == Consent.Status.PERSONALIZED
-//                            // Start our main activity with resolved Consent value
-//                            setupAppoDeal(consent)
-//                        }
-//                    }
-//                }
-//
-//                override fun onFailedToUpdateConsentInfo(e: ConsentManagerException) {
-//                    setupAppoDeal(null)
-//                }
-//            })
-//    }
-
-//    private fun showConsentForm() {
-//        if (consentForm == null) {
-//            consentForm = ConsentForm.Builder(this)
-//                .withListener(object : ConsentFormListener {
-//                    override fun onConsentFormLoaded() {
-//                        // Show ConsentManager Consent request form
-//                        consentForm?.showAsActivity()
-//                    }
-//
-//                    override fun onConsentFormError(error: ConsentManagerException) {
-//                        Toast.makeText(
-//                            this@MainActivity,
-//                            "Consent form error: " + error.reason,
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                        // Start our main activity with default Consent value
-//                        setupAppoDeal(null)
-//                    }
-//
-//                    override fun onConsentFormOpened() {
-//                        //ignore
-//                    }
-//
-//                    override fun onConsentFormClosed(consent: Consent) {
-//                        val hasConsent = consent.status == Consent.Status.PERSONALIZED
-//                        // Start our main activity with resolved Consent value
-//                        setupAppoDeal(consent)
-//                    }
-//                }).build()
-//        }
-//        // If Consent request form is already loaded, then we can display it, otherwise, we should load it first
-//        if (consentForm?.isLoaded() == true) {
-//            consentForm?.showAsActivity()
-//        } else {
-//            consentForm?.load()
-//        }
-//    }
 
     override fun onResume() {
         super.onResume()
@@ -149,11 +104,15 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
         Appodeal.cache(this, Appodeal.NATIVE)
         Appodeal.setBannerCallbacks(object : BannerCallbacks {
             override fun onBannerLoaded(p0: Int, p1: Boolean) {
+                binding.appodealBannerView.minimumHeight = (p0.toFloat() * (this@MainActivity.getResources().getDisplayMetrics().densityDpi / 160.0f)).toInt()
                 binding.rootLay.visibility = View.VISIBLE
+                if (!isFirstInternalShown) {
+                    Appodeal.show(this@MainActivity, Appodeal.INTERSTITIAL)
+                    isFirstInternalShown = true
+                }
             }
 
             override fun onBannerFailedToLoad() {
-
                 binding.rootLay.visibility = View.VISIBLE
             }
 
@@ -170,5 +129,41 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
             override fun onBannerExpired() = Unit
 
         })
+    }
+
+    private fun checkPostBack() {
+        try {
+            registerReceiver(InstallReferrerReceiver(), IntentFilter("com.android.vending.INSTALL_REFERRER"))
+            val build: InstallReferrerClient = InstallReferrerClient.newBuilder(this).build()
+            build.startConnection(object : InstallReferrerStateListener {
+                override fun onInstallReferrerServiceDisconnected() {}
+                override fun onInstallReferrerSetupFinished(i: Int) {
+                    if (i == 0) {
+                        try {
+//                            Sentry.captureMessage("All Ok for send INSTALL_REFERRER event")
+                            val installReferrer: String = build.getInstallReferrer().getInstallReferrer()
+                            val intent = Intent()
+                            intent.action = "com.android.vending.INSTALL_REFERRER"
+                            intent.putExtra("referrer", installReferrer)
+                            this@MainActivity.sendBroadcast(intent)
+//                            Sentry.captureMessage("INSTALL_REFERRER sent")
+                        } catch (e: Exception) {
+                            Log.e("NEW_INSTALL_REFERRER", e.toString())
+                        }
+                    } else if (i == 1) {
+//                        Sentry.captureMessage("SERVICE_UNAVAILABLE")
+                    } else if (i == 2) {
+//                        Sentry.captureMessage("FEATURE_NOT_SUPPORTED")
+                    }
+                }
+            })
+        } catch (th: Throwable) {
+
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState.putBoolean(SAVED_SHOWN_INTERNAL, isFirstInternalShown)
     }
 }
