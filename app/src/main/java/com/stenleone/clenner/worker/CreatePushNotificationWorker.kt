@@ -1,10 +1,21 @@
 package com.stenleone.clenner.worker
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.media.RingtoneManager
+import android.os.Build
+import android.widget.RemoteViews
+import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
+import com.stenleone.clenner.BuildConfig
+import com.stenleone.clenner.R
 import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
+import com.stenleone.clenner.ui.activity.MainActivity
 import com.stenleone.clenner.util.notification.NotificationBuilder
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -23,15 +34,14 @@ class CreatePushNotificationWorker @AssistedInject constructor(
 
         fun start(context: Context, timeShow: Int) {
 
-            val workRequest = PeriodicWorkRequestBuilder<CreatePushNotificationWorker>(6, TimeUnit.HOURS)
-                .setInitialDelay(timeShow.toLong(), TimeUnit.HOURS)
+            val workRequest = PeriodicWorkRequestBuilder<CreatePushNotificationWorker>(timeShow.toLong(), TimeUnit.HOURS)
                 .addTag(TAG)
 
             WorkManager
                 .getInstance(context)
                 .enqueueUniquePeriodicWork(
                     TAG,
-                    ExistingPeriodicWorkPolicy.KEEP,
+                    ExistingPeriodicWorkPolicy.REPLACE,
                     workRequest.build()
                 )
         }
@@ -42,7 +52,7 @@ class CreatePushNotificationWorker @AssistedInject constructor(
         var title = ""
         var subTitle = ""
 
-        when ((0..3).random()) {
+        when ((1..3).random()) {
             1 -> {
                 title = configService.getStringAsync(Config.CLEAN_PUSH_TITLE)
                 subTitle = configService.getStringAsync(Config.CLEAN_PUSH_SUB_TITLE)
@@ -67,9 +77,48 @@ class CreatePushNotificationWorker @AssistedInject constructor(
             subTitle
         )
 
-        notifyBuilder.createDefaultNotify()
+//        notifyBuilder.createDefaultLayoutNotify()
+        createNotificationManager().notify(NotificationBuilder.DEFAULT_NOTIFY_ID, createDefaultLayoutBuildNotification(title, subTitle).build())
 
         return Result.success()
+    }
+
+
+    fun createNotificationManager(): NotificationManager {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(
+                NotificationChannel(
+                    "CleanerId",
+                    "CleanerChannel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+                )
+            )
+        }
+        return notificationManager
+    }
+
+    fun createDefaultLayoutBuildNotification(title: String, subTitle: String): NotificationCompat.Builder {
+        val notificationLayout = RemoteViews(BuildConfig.APPLICATION_ID, R.layout.notification_lay)
+        notificationLayout.setTextViewText(R.id.title, title)
+        notificationLayout.setTextViewText(R.id.subTitle, subTitle)
+
+        return NotificationCompat.Builder(context, "CleanerId")
+            .setSmallIcon(R.drawable.ic_app_logo)
+            .setCustomContentView(notificationLayout)
+            .setContentIntent(
+                PendingIntent.getActivity(
+                    context,
+                    NotificationBuilder.PUSH_REQUEST_CODE,
+                    Intent(context, MainActivity::class.java),
+                    PendingIntent.FLAG_ONE_SHOT
+                )
+            )
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setVibrate(longArrayOf(500, 500, 500, 500))
+            .setAutoCancel(false)
     }
 
 }

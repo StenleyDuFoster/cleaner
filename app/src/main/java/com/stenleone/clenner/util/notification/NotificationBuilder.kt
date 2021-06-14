@@ -70,6 +70,29 @@ class NotificationBuilder(
             .setAutoCancel(false)
     }
 
+    fun createDefaultLayoutBuildNotification(): NotificationCompat.Builder {
+        val notificationLayout = RemoteViews(BuildConfig.APPLICATION_ID, R.layout.notification_lay)
+        notificationLayout.setTextViewText(R.id.title, title)
+        notificationLayout.setTextViewText(R.id.subTitle, subTitle)
+
+        return NotificationCompat.Builder(context, channelId)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
+            .setSmallIcon(R.drawable.ic_app_logo)
+            .setCustomContentView(notificationLayout)
+            .setContentIntent(
+                PendingIntent.getActivity(
+                    context,
+                    PUSH_REQUEST_CODE,
+                    resultIntent,
+                    PendingIntent.FLAG_ONE_SHOT
+                )
+            )
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setVibrate(longArrayOf(500, 500, 500, 500))
+            .setAutoCancel(false)
+    }
+
     fun createLayoutBuildNotification(): NotificationCompat.Builder {
 
         val notificationLayout = RemoteViews(BuildConfig.APPLICATION_ID, R.layout.notification_lay)
@@ -95,6 +118,12 @@ class NotificationBuilder(
     fun createDefaultNotify() {
         val notifyManager = createNotificationManager()
         val buildNotify = createDefaultBuildNotification()
+        notifyManager.notify(DEFAULT_NOTIFY_ID, buildNotify.build())
+    }
+
+    fun createDefaultLayoutNotify() {
+        val notifyManager = createNotificationManager()
+        val buildNotify = createDefaultLayoutBuildNotification()
         notifyManager.notify(DEFAULT_NOTIFY_ID, buildNotify.build())
     }
 

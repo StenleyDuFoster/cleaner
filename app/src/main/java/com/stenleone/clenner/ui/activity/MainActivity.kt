@@ -21,6 +21,7 @@ import com.stenleone.clenner.receiver.InstallReferrerReceiver
 import com.stenleone.clenner.ui.activity.base.BaseActivity
 import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
+import com.stenleone.clenner.worker.CreateOrUpdateNotificationWorker
 import com.stenleone.clenner.worker.CreatePushNotificationWorker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -77,7 +78,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
         lifecycleScope.launch {
             CreatePushNotificationWorker.start(this@MainActivity, configString.getIntAsync(Config.SHOW_NOTIFICATION_TIME_IN_HOUR))
         }
-//
+
         if (!prefs.isSendedDataAfterFirstOpen) {
             checkPostBack()
         }

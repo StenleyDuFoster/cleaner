@@ -1,17 +1,10 @@
 package com.stenleone.clenner.worker
 
-import android.content.Context
-import androidx.hilt.work.HiltWorker
-import androidx.work.*
-import com.stenleone.clenner.util.notification.NotificationBuilder
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
-import java.util.concurrent.TimeUnit
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_HIGH
-import android.app.PendingIntent
 import android.app.PendingIntent.getActivity
+import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -29,12 +22,15 @@ import android.os.Build.VERSION_CODES.O
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.DEFAULT_ALL
 import androidx.core.app.NotificationCompat.PRIORITY_MAX
-import androidx.work.ListenableWorker.Result.success
-import androidx.work.Worker
-import androidx.work.WorkerParameters
+import androidx.hilt.work.HiltWorker
+import androidx.work.*
 import com.stenleone.clenner.R
 import com.stenleone.clenner.ui.activity.MainActivity
 import com.stenleone.clenner.util.extencial.vectorToBitmap
+import com.stenleone.clenner.util.notification.NotificationBuilder
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
+import java.util.concurrent.TimeUnit
 
 @HiltWorker
 class CreateOrUpdateNotificationWorker @AssistedInject constructor(
@@ -72,11 +68,7 @@ class CreateOrUpdateNotificationWorker @AssistedInject constructor(
         )
 
         notifyBuilder.createCleanNotify()
-
-        sendNotification(55)
         createDefaultNotify()
-        notifyBuilder.createCleanNotify()
-        notifyBuilder.createDefaultNotify()
 
         return result
     }

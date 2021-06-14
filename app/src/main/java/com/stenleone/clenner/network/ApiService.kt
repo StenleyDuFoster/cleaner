@@ -10,7 +10,6 @@ interface ApiService {
     companion object {
         const val SOURCE = "click.php"
         const val POSTBACK = "postback"
-
     }
 
     @GET("")
