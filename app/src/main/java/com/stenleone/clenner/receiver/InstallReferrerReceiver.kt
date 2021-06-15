@@ -10,6 +10,7 @@ import com.stenleone.clenner.network.ApiService
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
@@ -45,6 +46,7 @@ class InstallReferrerReceiver : BaseReceiver() {
 //                if (postbackRequest.isSuccessful && sourceRequest.isSuccessful) {
                     prefs.isSendedDataAfterFirstOpen = true
 //                }
+                this.cancel()
             }
 
 

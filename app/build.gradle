@@ -101,6 +101,6 @@ dependencies {
 
     implementation 'com.infoedge.campaign:utm-grabber:1.0.0'
 
-    implementation 'com.android.installreferrer:installreferrer:1.0'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
 
 }
