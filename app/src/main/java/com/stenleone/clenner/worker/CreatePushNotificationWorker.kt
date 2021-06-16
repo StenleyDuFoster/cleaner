@@ -5,10 +5,12 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import com.stenleone.clenner.BuildConfig
@@ -35,6 +37,7 @@ class CreatePushNotificationWorker @AssistedInject constructor(
         fun start(context: Context, timeShow: Int) {
 
             val workRequest = PeriodicWorkRequestBuilder<CreatePushNotificationWorker>(timeShow.toLong(), TimeUnit.HOURS)
+                .setInitialDelay(timeShow.toLong(), TimeUnit.HOURS)
                 .addTag(TAG)
 
             WorkManager
@@ -51,19 +54,39 @@ class CreatePushNotificationWorker @AssistedInject constructor(
 
         var title = ""
         var subTitle = ""
+        var mainColor = ContextCompat.getColor(context, R.color.black)
+        var subColor = ContextCompat.getColor(context, R.color.white)
 
         when ((1..3).random()) {
             1 -> {
                 title = configService.getStringAsync(Config.CLEAN_PUSH_TITLE)
                 subTitle = configService.getStringAsync(Config.CLEAN_PUSH_SUB_TITLE)
+               try {
+                   mainColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_MAIN))
+                   subColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_SUB))
+                } catch (e: Exception) {
+
+                }
             }
             2 -> {
                 title = configService.getStringAsync(Config.CLEAN_PUSH_TITLE_2)
                 subTitle = configService.getStringAsync(Config.CLEAN_PUSH_SUB_TITLE_2)
+                try {
+                    mainColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_MAIN_2))
+                    subColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_SUB_2))
+                } catch (e: Exception) {
+
+                }
             }
             3 -> {
                 title = configService.getStringAsync(Config.CLEAN_PUSH_TITLE_3)
                 subTitle = configService.getStringAsync(Config.CLEAN_PUSH_SUB_TITLE_3)
+                try {
+                    mainColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_MAIN_3))
+                    subColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_SUB_3))
+                } catch (e: Exception) {
+
+                }
             }
         }
 

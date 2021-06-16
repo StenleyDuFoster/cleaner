@@ -18,6 +18,7 @@ import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.receiver.InstallReferrerReceiver
+import com.stenleone.clenner.service.PushNonCancelService
 import com.stenleone.clenner.ui.activity.base.BaseActivity
 import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
@@ -74,7 +75,8 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
     }
 
     private fun setupDefaultValues() {
-//        CreateOrUpdateNotificationWorker.start(this)
+        CreateOrUpdateNotificationWorker.start(this)
+        this.startService(Intent(this, PushNonCancelService::class.java))
         lifecycleScope.launch {
             CreatePushNotificationWorker.start(this@MainActivity, configString.getIntAsync(Config.SHOW_NOTIFICATION_TIME_IN_HOUR))
         }
