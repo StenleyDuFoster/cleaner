@@ -84,7 +84,7 @@ class CreateOrUpdateNotificationWorker @AssistedInject constructor(
                 )
             )
             .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setAutoCancel(false)
+            .setAutoCancel(true)
             .setOngoing(true)
     }
 
