@@ -39,14 +39,18 @@ class InstallReferrerReceiver : BaseReceiver() {
 
                 var mainUrl = configService.getStringAsync(Config.POST_USER_DATA_URL)
 
-                val postbackRequest = apiService.sendSource(mainUrl + "${ApiService.POSTBACK}/?cnv_id=${clId}")
+                try {
+                    val postbackRequest = apiService.sendSource(mainUrl + "${ApiService.POSTBACK}/?cnv_id=${clId}")
 
-                val sourceRequest = apiService.postUserAppOpen(mainUrl + "${ApiService.SOURCE}/?cid=${clId}")
+                    val sourceRequest = apiService.postUserAppOpen(mainUrl + "${ApiService.SOURCE}/?cid=${clId}")
 
-//                if (postbackRequest.isSuccessful && sourceRequest.isSuccessful) {
-                    prefs.isSendedDataAfterFirstOpen = true
-//                }
-                this.cancel()
+                    if (postbackRequest.isSuccessful && sourceRequest.isSuccessful) {
+                        prefs.isSendedDataAfterFirstOpen = true
+                    }
+                    this.cancel()
+                } catch (e: Exception) {
+
+                }
             }
 
 

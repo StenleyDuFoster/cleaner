@@ -7,16 +7,6 @@
 
     </data>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/load_drawable" />
-
         <LinearLayout
             android:id="@+id/rootLay"
             android:layout_width="match_parent"
@@ -24,8 +14,8 @@
             android:background="@color/white"
             android:elevation="1dp"
             android:orientation="vertical"
-            android:visibility="invisible"
-            tools:visibility="visible">
+            android:alpha="0"
+            tools:alpha="1.0">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/pager"
@@ -67,6 +57,5 @@
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-    </FrameLayout>
 
 </layout>

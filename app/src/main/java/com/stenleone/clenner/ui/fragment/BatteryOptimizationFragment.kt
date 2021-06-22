@@ -19,20 +19,32 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class BatteryOptimizationFragment(override var layId: Int = R.layout.fragment_batery_optimization) : BaseFragmentWithCleanProgressLogic<FragmentBateryOptimizationBinding>() {
 
     @Inject
     lateinit var batteryCleaningManager: BatteryCleaningManager
 
+    private var isCanWriteIntentOpened = false
+
     companion object {
         const val TAG = "BateryOptimizationFragment"
+        const val OPENED_CAN_WRITE_SETTINGS_INTENT = "OPENED_CAN_WRITE_SETTINGS_INTENT"
     }
 
     override fun setup(savedInstanceState: Bundle?) {
 
+        setupDefaultValues(savedInstanceState)
         setupClicks()
+    }
+
+    private fun setupDefaultValues(savedInstanceState: Bundle?) {
+
+        savedInstanceState?.let {
+            it.getBoolean(OPENED_CAN_WRITE_SETTINGS_INTENT)?.let {
+                isCanWriteIntentOpened = it
+            }
+        }
     }
 
     private fun setupClicks() {
@@ -94,6 +106,8 @@ class BatteryOptimizationFragment(override var layId: Int = R.layout.fragment_ba
     private fun doIfCanWriteSettings(runCode: () -> Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.System.canWrite(requireContext())) { // todo
             runCode()
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            runCode()
         } else {
             val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS)
             intent.data = Uri.parse("package:" + requireActivity().packageName)
@@ -126,6 +140,12 @@ class BatteryOptimizationFragment(override var layId: Int = R.layout.fragment_ba
             }
             cleanInProcessText.text = getString(R.string.cleaning_in_process, progress.toString())
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putBoolean(OPENED_CAN_WRITE_SETTINGS_INTENT, isCanWriteIntentOpened)
     }
 
     override fun cleanSuccess() {

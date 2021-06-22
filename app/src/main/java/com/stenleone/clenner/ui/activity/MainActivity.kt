@@ -1,5 +1,6 @@
 package com.stenleone.clenner.ui.activity
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.BannerCallbacks
+import com.appodeal.ads.InterstitialCallbacks
 import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityMainBinding
@@ -108,23 +110,19 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
         Appodeal.setBannerCallbacks(object : BannerCallbacks {
             override fun onBannerLoaded(p0: Int, p1: Boolean) {
                 binding.appodealBannerView.minimumHeight = (p0.toFloat() * (this@MainActivity.getResources().getDisplayMetrics().densityDpi / 160.0f)).toInt()
-                binding.rootLay.visibility = View.VISIBLE
-                if (!isFirstInternalShown) {
-                    Appodeal.show(this@MainActivity, Appodeal.INTERSTITIAL)
-                    isFirstInternalShown = true
-                }
+                binding.appodealBannerView.visibility = View.VISIBLE
             }
 
             override fun onBannerFailedToLoad() {
-                binding.rootLay.visibility = View.VISIBLE
+                binding.appodealBannerView.visibility = View.VISIBLE
             }
 
             override fun onBannerShown() {
-                binding.rootLay.visibility = View.VISIBLE
+                binding.appodealBannerView.visibility = View.VISIBLE
             }
 
             override fun onBannerShowFailed() {
-                binding.rootLay.visibility = View.VISIBLE
+                binding.appodealBannerView.visibility = View.VISIBLE
             }
 
             override fun onBannerClicked() = Unit
@@ -132,6 +130,48 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
             override fun onBannerExpired() = Unit
 
         })
+
+        Appodeal.setInterstitialCallbacks(object : InterstitialCallbacks {
+            override fun onInterstitialLoaded(p0: Boolean) {
+                if (!isFirstInternalShown) {
+                    Appodeal.show(this@MainActivity, Appodeal.INTERSTITIAL)
+                    isFirstInternalShown = true
+                }
+                showMainContent()
+            }
+
+            override fun onInterstitialFailedToLoad() {
+                showMainContent()
+            }
+
+            override fun onInterstitialShown() {
+
+            }
+
+            override fun onInterstitialShowFailed() {
+                showMainContent()
+            }
+
+            override fun onInterstitialClicked() {
+
+            }
+
+            override fun onInterstitialClosed() {
+
+            }
+
+            override fun onInterstitialExpired() {
+
+            }
+
+        })
+    }
+
+    private fun showMainContent() {
+        ObjectAnimator.ofFloat(binding.rootLay, View.ALPHA, 1.0f).also {
+            it.duration = 1000
+            it.start()
+        }
     }
 
     private fun checkPostBack() {
