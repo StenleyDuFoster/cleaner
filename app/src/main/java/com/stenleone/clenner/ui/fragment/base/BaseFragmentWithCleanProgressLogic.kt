@@ -1,16 +1,11 @@
 package com.stenleone.clenner.ui.fragment.base
 
 import android.animation.ValueAnimator
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import android.content.Intent
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import com.appodeal.ads.Appodeal
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
-import com.stenleone.clenner.util.extencial.hideKeyboard
+import com.stenleone.clenner.ui.activity.SuccessCleanActivityActivity
 import kotlin.random.Random
 
 abstract class BaseFragmentWithCleanProgressLogic<T : ViewDataBinding> : BaseFragment<T>() {
@@ -32,6 +27,7 @@ abstract class BaseFragmentWithCleanProgressLogic<T : ViewDataBinding> : BaseFra
 
             Appodeal.show(requireActivity(), Appodeal.INTERSTITIAL)
             Appodeal.cache(requireActivity(), Appodeal.INTERSTITIAL)
+            startActivity(Intent(requireContext(), SuccessCleanActivityActivity::class.java))
         }
     }
 

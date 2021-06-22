@@ -135,6 +135,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
             override fun onInterstitialLoaded(p0: Boolean) {
                 if (!isFirstInternalShown) {
                     Appodeal.show(this@MainActivity, Appodeal.INTERSTITIAL)
+                    Appodeal.cache(this@MainActivity, Appodeal.INTERSTITIAL)
                     isFirstInternalShown = true
                 }
                 showMainContent()
