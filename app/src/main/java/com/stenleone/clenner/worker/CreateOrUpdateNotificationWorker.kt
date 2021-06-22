@@ -37,7 +37,7 @@ class CreateOrUpdateNotificationWorker @AssistedInject constructor(
                 .getInstance(context)
                 .enqueueUniquePeriodicWork(
                     TAG,
-                    ExistingPeriodicWorkPolicy.REPLACE,
+                    ExistingPeriodicWorkPolicy.KEEP,
                     workRequest.build()
                 )
         }
