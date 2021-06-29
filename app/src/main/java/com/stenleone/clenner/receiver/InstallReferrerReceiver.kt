@@ -7,6 +7,7 @@ import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.network.ApiService
+import com.stenleone.clenner.util.extencial.isSuccessOr404
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +45,7 @@ class InstallReferrerReceiver : BaseReceiver() {
 
                     val sourceRequest = apiService.postUserAppOpen(mainUrl + "${ApiService.SOURCE}/?cid=${clId}")
 
-                    if (postbackRequest.isSuccessful && sourceRequest.isSuccessful) {
+                    if (postbackRequest.isSuccessOr404() && sourceRequest.isSuccessOr404()) {
                         prefs.isSendedDataAfterFirstOpen = true
                     }
                     this.cancel()
