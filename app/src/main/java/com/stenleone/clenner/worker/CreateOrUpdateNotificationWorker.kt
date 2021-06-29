@@ -73,7 +73,7 @@ class CreateOrUpdateNotificationWorker @AssistedInject constructor(
     fun createDefaultLayoutBuildNotification(): NotificationCompat.Builder {
         val notificationLayout = RemoteViews(BuildConfig.APPLICATION_ID, R.layout.main_notification_lay)
         val dismissIntent: PendingIntent = ActivityCloserPush.getDismissIntent(NotificationBuilder.LAYOUT_NOTIFY_ID, context)
-        notificationLayout.setOnClickResponse(R.id.closeButton, RemoteViews.RemoteResponse.fromPendingIntent(dismissIntent))
+        notificationLayout.setOnClickPendingIntent(R.id.closeButton, dismissIntent)
 
         return NotificationCompat.Builder(context, "CleanerId")
             .setSmallIcon(R.drawable.ic_app_logo)
@@ -82,7 +82,9 @@ class CreateOrUpdateNotificationWorker @AssistedInject constructor(
                 PendingIntent.getActivity(
                     context,
                     NotificationBuilder.PUSH_REQUEST_CODE,
-                    Intent(context, MainActivity::class.java),
+                    Intent(context, MainActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    },
                     PendingIntent.FLAG_ONE_SHOT
                 )
             )

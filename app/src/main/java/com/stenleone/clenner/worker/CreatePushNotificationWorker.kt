@@ -134,7 +134,9 @@ class CreatePushNotificationWorker @AssistedInject constructor(
                 PendingIntent.getActivity(
                     context,
                     NotificationBuilder.PUSH_REQUEST_CODE,
-                    Intent(context, MainActivity::class.java),
+                    Intent(context, MainActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    },
                     PendingIntent.FLAG_ONE_SHOT
                 )
             )

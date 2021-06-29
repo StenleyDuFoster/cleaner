@@ -22,6 +22,7 @@
     <string name="temperature_high">HIGH</string>
 
     <string name="cleaning_in_process">Cleaning in process %s %%</string>
+    <string name="scanning_in_progress">Scanning %s</string>
 
     <string name="normal">Normal</string>
     <string name="high">High</string>

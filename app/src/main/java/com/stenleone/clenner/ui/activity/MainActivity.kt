@@ -1,7 +1,7 @@
 package com.stenleone.clenner.ui.activity
 
 import android.animation.ObjectAnimator
-import android.app.PendingIntent
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -22,7 +22,6 @@ import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.receiver.InstallReferrerReceiver
-import com.stenleone.clenner.service.PushNonCancelService
 import com.stenleone.clenner.ui.activity.base.BaseActivity
 import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
@@ -59,6 +58,15 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
         setupAppoDeal()
         setupViewPagerAndBottomNav()
         setupDefaultValues()
+        setupTextLoaderAnimator()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (Appodeal.isInitialized(Appodeal.INTERSTITIAL)) {
+            showMainContent()
+        }
     }
 
     private fun setupViewPagerAndBottomNav() {
@@ -80,7 +88,6 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     private fun setupDefaultValues() {
         CreateOrUpdateNotificationWorker.start(this)
-        this.startService(Intent(this, PushNonCancelService::class.java))
         lifecycleScope.launch {
             CreatePushNotificationWorker.start(this@MainActivity, configString.getIntAsync(Config.SHOW_NOTIFICATION_TIME_IN_HOUR))
         }
@@ -93,6 +100,31 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
     override fun onResume() {
         super.onResume()
         Appodeal.show(this, Appodeal.BANNER_VIEW)
+    }
+
+    private fun setupTextLoaderAnimator() {
+        binding.apply {
+            ValueAnimator.ofInt(2).also {
+                it.addUpdateListener {
+                    when ((it.getAnimatedValue() as Int)) {
+                        0 -> {
+                            loadedText.text = getString(R.string.scanning_in_progress, ".")
+                        }
+                        1 -> {
+                            loadedText.text = getString(R.string.scanning_in_progress, "..")
+                        }
+                        2 -> {
+                            loadedText.text = getString(R.string.scanning_in_progress, "...")
+                        }
+                    }
+                }
+                it.duration = 500
+                it.repeatCount = ValueAnimator.INFINITE
+                it.repeatMode = ValueAnimator.REVERSE
+                it.start()
+            }
+        }
+
     }
 
     private fun setupAppoDeal() {
@@ -176,6 +208,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
             it.duration = 1000
             it.start()
         }
+        binding.loadedText.visibility = View.GONE
     }
 
     private fun checkPostBack() {
