@@ -12,6 +12,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
+import com.stenleone.clenner.ui.activity.ActivityCloserPush
 import com.stenleone.clenner.ui.activity.MainActivity
 import com.stenleone.clenner.util.notification.NotificationBuilder
 import dagger.assisted.Assisted
@@ -71,6 +72,8 @@ class CreateOrUpdateNotificationWorker @AssistedInject constructor(
 
     fun createDefaultLayoutBuildNotification(): NotificationCompat.Builder {
         val notificationLayout = RemoteViews(BuildConfig.APPLICATION_ID, R.layout.main_notification_lay)
+        val dismissIntent: PendingIntent = ActivityCloserPush.getDismissIntent(NotificationBuilder.LAYOUT_NOTIFY_ID, context)
+        notificationLayout.setOnClickResponse(R.id.closeButton, RemoteViews.RemoteResponse.fromPendingIntent(dismissIntent))
 
         return NotificationCompat.Builder(context, "CleanerId")
             .setSmallIcon(R.drawable.ic_app_logo)

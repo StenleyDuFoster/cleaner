@@ -37,4 +37,12 @@
         android:layout_margin="10dp"
         android:src="@drawable/ic_system_cleaning_icon_un_active" />
 
+    <ImageView
+        android:id="@+id/closeButton"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_stat_name" />
+
 </LinearLayout>
