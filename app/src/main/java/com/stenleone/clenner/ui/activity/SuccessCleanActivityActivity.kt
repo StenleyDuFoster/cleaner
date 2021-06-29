@@ -1,6 +1,8 @@
 package com.stenleone.clenner.ui.activity
 
 import android.os.Bundle
+import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.appodeal.ads.Appodeal
 import com.stenleone.clenner.R
@@ -25,7 +27,16 @@ class SuccessCleanActivityActivity(override var layId: Int = R.layout.activity_c
             val nativeAds = Appodeal.getNativeAds(1)
 
             nativeAds.firstOrNull()?.let {
+                binding.nativeFeedAds.nativeMediaView = binding.nativeMedia
+                binding.nativeFeedAds.setCallToActionColor(ContextCompat.getColor(this, R.color.black))
+                binding.nativeFeedAds.titleView = binding.nativeTitle
                 binding.nativeFeedAds.setNativeAd(it)
+
+                if (it.containsVideo()) {
+                    binding.nativeMedia.visibility = View.VISIBLE
+                } else {
+                    binding.nativeMedia.visibility = View.GONE
+                }
             }
             Appodeal.cache(this, Appodeal.NATIVE)
         } else {

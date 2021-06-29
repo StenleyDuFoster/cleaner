@@ -141,7 +141,7 @@ class CreatePushNotificationWorker @AssistedInject constructor(
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setVibrate(longArrayOf(500, 500, 500, 500))
-            .setAutoCancel(false)
+            .setAutoCancel(true)
     }
 
 }
