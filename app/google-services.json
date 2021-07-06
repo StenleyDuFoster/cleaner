@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "863118237576",
+    "project_id": "soft-cleaner-light",
+    "storage_bucket": "soft-cleaner-light.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863118237576:android:2ce10801a507be05b1643d",
+        "android_client_info": {
+          "package_name": "com.stenleone.clenner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863118237576-old92m8bsmgnk78jkeq2o9ckqdu15opr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stenleone.clenner",
+            "certificate_hash": "311e72345726e12c9c77fcfc1d1305aeeb16c70b"
+          }
+        },
+        {
+          "client_id": "863118237576-5a2l0nrpdbqpju8al6nmkm0uirmnd71r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDehXPMi9hJDnJWAzeDPT_eLdUafQivLpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863118237576-5a2l0nrpdbqpju8al6nmkm0uirmnd71r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

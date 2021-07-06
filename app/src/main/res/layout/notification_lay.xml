@@ -1,69 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/notification_root"
     android:layout_width="match_parent"
     android:layout_height="64dp"
+    android:background="@android:color/black"
     android:orientation="horizontal"
     android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    tools:background="@android:color/black">
+    android:paddingEnd="16dp">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/title"
+        style="@style/NormalText"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:ignore="UseCompoundDrawables">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="start"
+        android:textColor="@color/white" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical"
-            android:includeFontPadding="false"
-            android:letterSpacing="0.2"
-            android:text="@string/app_name"
-            android:textAllCaps="true"
-            android:textColor="@android:color/white"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            tools:ignore="SmallSp"/>
+    <!--    <com.google.android.material.card.MaterialCardView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:layout_marginStart="10dp"-->
+    <!--        android:elevation="0dp"-->
+    <!--        app:cardBackgroundColor="@color/transparent"-->
+    <!--        app:cardCornerRadius="10dp"-->
+    <!--        app:strokeColor="@color/white"-->
+    <!--        app:strokeWidth="1dp">-->
 
-        <ImageView
-            android:id="@+id/notification_image"
-            android:layout_width="48dp"
-            android:layout_height="32dp"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="fitXY"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/text_cointainer"
+    <TextView
+        android:id="@+id/subTitle"
+        style="@style/NormalText"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_ring"
+        android:padding="5dp"
+        tools:text="sfsfs" />
 
-        <TextView
-            android:id="@+id/notification_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            tools:text="Balance Update!"/>
+    <!--    </com.google.android.material.card.MaterialCardView>-->
 
-        <TextView
-            android:id="@+id/notification_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:lineSpacingExtra="3sp"
-            android:textColor="@android:color/white"
-            app:autoSizeMaxTextSize="11sp"
-            app:autoSizeTextType="uniform"
-            tools:text="You earned 123 coins!"/>
-
-    </LinearLayout>
 </LinearLayout>

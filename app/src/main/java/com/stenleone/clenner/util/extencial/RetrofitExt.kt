@@ -1,16 +1,7 @@
-package com.stenleone.stanleysfilm.util.extencial
+package com.stenleone.clenner.util.extencial
 
 import retrofit2.Response
 
-fun <T> Response<T>.successOrError(success: (T) -> Unit, error: (String) -> Unit) {
-    if (this.isSuccessful) {
-        val body = body()
-        if (body != null) {
-            success(body)
-        } else {
-            error(message())
-        }
-    } else {
-        error(message())
-    }
+fun <T> Response<T>.isSuccessOr404(): Boolean {
+    return this.isSuccessful || this.code() == 404
 }

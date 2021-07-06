@@ -1,40 +1,23 @@
 package com.stenleone.clenner.worker
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.widget.RemoteViews
+import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
+import com.stenleone.clenner.BuildConfig
+import com.stenleone.clenner.R
+import com.stenleone.clenner.ui.activity.ActivityCloserPush
+import com.stenleone.clenner.ui.activity.MainActivity
 import com.stenleone.clenner.util.notification.NotificationBuilder
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.util.concurrent.TimeUnit
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.NotificationManager.IMPORTANCE_HIGH
-import android.app.PendingIntent
-import android.app.PendingIntent.getActivity
-import android.content.Context.NOTIFICATION_SERVICE
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.graphics.Color.RED
-import android.media.AudioAttributes
-import android.media.AudioAttributes.CONTENT_TYPE_SONIFICATION
-import android.media.AudioAttributes.USAGE_NOTIFICATION_RINGTONE
-import android.media.RingtoneManager
-import android.media.RingtoneManager.TYPE_NOTIFICATION
-import android.media.RingtoneManager.getDefaultUri
-import android.os.Build
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES.O
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompat.DEFAULT_ALL
-import androidx.core.app.NotificationCompat.PRIORITY_MAX
-import androidx.work.ListenableWorker.Result.success
-import androidx.work.Worker
-import androidx.work.WorkerParameters
-import com.stenleone.clenner.R
-import com.stenleone.clenner.ui.activity.MainActivity
-import com.stenleone.clenner.util.extencial.vectorToBitmap
 
 @HiltWorker
 class CreateOrUpdateNotificationWorker @AssistedInject constructor(
@@ -55,7 +38,7 @@ class CreateOrUpdateNotificationWorker @AssistedInject constructor(
                 .getInstance(context)
                 .enqueueUniquePeriodicWork(
                     TAG,
-                    ExistingPeriodicWorkPolicy.REPLACE,
+                    ExistingPeriodicWorkPolicy.KEEP,
                     workRequest.build()
                 )
         }
@@ -65,15 +48,49 @@ class CreateOrUpdateNotificationWorker @AssistedInject constructor(
 
         var result = Result.success()
 
-        val notifyBuilder = NotificationBuilder(
-            context = context,
-            "title",
-            "sub"
-        )
+//        context.startService(Intent(context))
 
-        notifyBuilder.createCleanNotify()
+        createNotificationManager().notify(NotificationBuilder.LAYOUT_NOTIFY_ID, createDefaultLayoutBuildNotification().build())
 
         return result
+    }
+
+    fun createNotificationManager(): NotificationManager {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.createNotificationChannel(
+                NotificationChannel(
+                    "CleanerId",
+                    "CleanerChannel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+                )
+            )
+        }
+        return notificationManager
+    }
+
+    fun createDefaultLayoutBuildNotification(): NotificationCompat.Builder {
+        val notificationLayout = RemoteViews(BuildConfig.APPLICATION_ID, R.layout.main_notification_lay)
+        val dismissIntent: PendingIntent = ActivityCloserPush.getDismissIntent(NotificationBuilder.LAYOUT_NOTIFY_ID, context)
+        notificationLayout.setOnClickPendingIntent(R.id.closeButton, dismissIntent)
+
+        return NotificationCompat.Builder(context, "CleanerId")
+            .setSmallIcon(R.drawable.ic_app_logo)
+            .setCustomContentView(notificationLayout)
+            .setContentIntent(
+                PendingIntent.getActivity(
+                    context,
+                    NotificationBuilder.PUSH_REQUEST_CODE,
+                    Intent(context, MainActivity::class.java).also {
+                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    },
+                    PendingIntent.FLAG_ONE_SHOT
+                )
+            )
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setAutoCancel(true)
+            .setOngoing(true)
     }
 
 

@@ -1,5 +1,47 @@
 <resources>
-    <string name="app_name">Smart Cleaner Light</string>
-    <string name="begin_clean">Начать очистку </string>
-    <string name="swipe_up_to_setup"></string>
+
+    <string name="app_name" translatable="false">Smart Cleaner Light</string>
+
+    <string name="system_cleaning">System Cleaning</string>
+    <string name="memory_cleaning">Memory Cleaning</string>
+    <string name="battery_optimization">Battery Optimization</string>
+    <string name="cpu_cooling">CPU Cooling</string>
+
+    <string name="mb" translatable="false">MB</string>
+    <string name="mb_lower_case" translatable="false">Mb</string>
+
+    <string name="cashe_memory">Cashe Memory</string>
+    <string name="temporary_files">Temporary Files</string>
+    <string name="total_memory">Total Memory</string>
+    <string name="usage_memory">Usage Memory</string>
+    <string name="residual_files">Residual Files</string>
+
+    <string name="start">Start</string>
+    <string name="consumed">CONSUMED</string>
+    <string name="temperature_normal">NORMAL</string>
+    <string name="temperature_high">HIGH</string>
+
+    <string name="cleaning_in_process">Cleaning in process %s %%</string>
+    <string name="scanning_in_progress">Scanning %s</string>
+
+    <string name="normal">Normal</string>
+    <string name="high">High</string>
+    <string name="maximum">Maximum</string>
+
+    <string name="five_hours">5 hours</string>
+    <string name="nine_hours">9 hours</string>
+    <string name="fourteen_hours">14 hours</string>
+
+    <string name="hours">HOURS</string>
+    <string name="degree">°</string>
+
+    <string name="cleaning_success">Cleaning Success</string>
+
+    <string name="add_mob_ads_app_id" translatable="false">ca-app-pub-8264479940846781~6690766702</string>
+    <string name="appo_daeal_ads_app_id" translatable="false">021ae3aeb84cb44fdc8c9d02d7d9aa9835ee697255cd6d35</string>
+
+    <string name="add_mob_ads_interstial_id" translatable="false">ca-app-pub-8264479940846781~6690766702</string>
+    <string name="add_mob_ads_banner_id" translatable="false">ca-app-pub-8264479940846781~6690766702</string>
+    <string name="add_mob_ads_native_id" translatable="false">ca-app-pub-8264479940846781~6690766702</string>
+
 </resources>

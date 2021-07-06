@@ -3,6 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque">
 
-    <item android:drawable="@color/shakespeare"/>
+    <item android:drawable="@color/white"/>
 
+    <item
+        android:gravity="center">
+
+        <bitmap
+            android:src="@drawable/splash_image"
+            android:gravity="center"/>
+    </item>
 </layer-list>

@@ -1,6 +1,6 @@
 package com.stenleone.clenner.util.constans
 
-object BindingConstan {
+object BindingConstant {
 
     const val SMALL_THROTTLE = 300L
 
