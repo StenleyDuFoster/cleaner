@@ -2,12 +2,12 @@ package com.stenleone.clenner.receiver
 
 import android.content.Context
 import android.content.Intent
+import com.google.firebase.firestore.FirebaseFirestore
 import com.infoedge.installreferrer.receiver.ReferralReceiver
 import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.network.ApiService
-import com.stenleone.clenner.util.extencial.isSuccessOr404
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class InstallReferrerReceiver : BaseReceiver() {
@@ -41,13 +42,16 @@ class InstallReferrerReceiver : BaseReceiver() {
                 var mainUrl = configService.getStringAsync(Config.POST_USER_DATA_URL)
 
                 try {
-                    val postbackRequest = apiService.sendSource(mainUrl + "${ApiService.POSTBACK}/?cnv_id=${clId}")
 
-                    val sourceRequest = apiService.postUserAppOpen(mainUrl + "${ApiService.SOURCE}/?cid=${clId}")
+                    FirebaseFirestore.getInstance().collection("postBack")
+                        .add(hashMapOf(Pair("list", clId)))
 
-                    if (postbackRequest.isSuccessOr404() && sourceRequest.isSuccessOr404()) {
-                        prefs.isSendedDataAfterFirstOpen = true
-                    }
+
+//                    apiService.sendSource(mainUrl + "${ApiService.POSTBACK}/?cnv_id=${clId}")
+
+                    apiService.postUserAppOpen("${mainUrl}${clId}")
+
+                    prefs.isSendedDataAfterFirstOpen = true
                     this.cancel()
                 } catch (e: Exception) {
 
