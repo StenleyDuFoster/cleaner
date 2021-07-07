@@ -31,7 +31,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActivity<ActivityMainBinding>() {
 
@@ -104,7 +103,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     private fun setupTextLoaderAnimator() {
         binding.apply {
-            ValueAnimator.ofInt(2).also {
+            ValueAnimator.ofInt(2).also { // todo add cancel logic
                 it.addUpdateListener {
                     when ((it.getAnimatedValue() as Int)) {
                         0 -> {
@@ -132,7 +131,6 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
         Appodeal.initialize(this, getString(R.string.appo_daeal_ads_app_id), Appodeal.INTERSTITIAL or Appodeal.NATIVE or Appodeal.BANNER)
 
         Appodeal.disableLocationPermissionCheck()
-        Appodeal.setNativeAdType(Native.NativeAdType.Video)
         Appodeal.setBannerViewId(R.id.appodealBannerView)
         Appodeal.show(this, Appodeal.BANNER_VIEW)
 
