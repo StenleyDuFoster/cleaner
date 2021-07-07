@@ -15,6 +15,7 @@ import com.appodeal.ads.Appodeal
 import com.appodeal.ads.BannerCallbacks
 import com.appodeal.ads.InterstitialCallbacks
 import com.appodeal.ads.Native
+import com.google.firebase.firestore.FirebaseFirestore
 import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityMainBinding
@@ -62,7 +63,6 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     override fun onStart() {
         super.onStart()
-
         if (Appodeal.isInitialized(Appodeal.INTERSTITIAL)) {
             showMainContent()
         }
