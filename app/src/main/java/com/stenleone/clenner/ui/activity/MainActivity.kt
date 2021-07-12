@@ -129,7 +129,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
         Appodeal.initialize(this, getString(R.string.appo_daeal_ads_app_id), Appodeal.INTERSTITIAL or Appodeal.NATIVE or Appodeal.BANNER)
 
-        Appodeal.setNativeAdType(Native.NativeAdType.NoVideo)
+        Appodeal.setNativeAdType(Native.NativeAdType.Auto)
         Appodeal.disableLocationPermissionCheck()
         Appodeal.setBannerViewId(R.id.appodealBannerView)
         Appodeal.show(this, Appodeal.BANNER_VIEW)
