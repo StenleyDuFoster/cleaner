@@ -99,7 +99,7 @@ class NotificationBuilder(
     fun createLayoutBuildNotification(): NotificationCompat.Builder {
 
         val notificationLayout = RemoteViews(context.packageName, R.layout.notification_lay)
-        notificationLayout.setImageViewResource(R.id.notification_image, R.drawable.ic_app_logo)
+//        notificationLayout.setImageViewResource(R.id.notification_image, R.drawable.ic_app_logo)
 //        notificationLayout.setTextViewText(R.id.notification_title, "1")
 //        notificationLayout.setTextViewText(R.id.notification_text, "12313")
         notificationLayout.setInt(R.id.notification_root, "setBackgroundColor", ContextCompat.getColor(context, R.color.black))

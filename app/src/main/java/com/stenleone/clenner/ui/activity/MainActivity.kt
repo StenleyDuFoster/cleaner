@@ -15,7 +15,6 @@ import com.appodeal.ads.Appodeal
 import com.appodeal.ads.BannerCallbacks
 import com.appodeal.ads.InterstitialCallbacks
 import com.appodeal.ads.Native
-import com.google.firebase.firestore.FirebaseFirestore
 import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityMainBinding
@@ -130,6 +129,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
         Appodeal.initialize(this, getString(R.string.appo_daeal_ads_app_id), Appodeal.INTERSTITIAL or Appodeal.NATIVE or Appodeal.BANNER)
 
+        Appodeal.setNativeAdType(Native.NativeAdType.NoVideo)
         Appodeal.disableLocationPermissionCheck()
         Appodeal.setBannerViewId(R.id.appodealBannerView)
         Appodeal.show(this, Appodeal.BANNER_VIEW)

@@ -39,9 +39,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            app:layout_constraintBottom_toTopOf="@+id/casheMemoryCard"
             android:id="@+id/progress_bg"
             android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_height="0dp"
             android:src="@drawable/ic_system_cleaning_progress_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,6 +127,7 @@
             android:layout_marginBottom="18dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toTopOf="@id/TotalMemoryCard"
             app:layout_constraintEnd_toStartOf="@id/temporaryFilesCard"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -185,6 +187,7 @@
             android:layout_marginBottom="18dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toTopOf="@id/ResidualFilesCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -244,6 +247,7 @@
             android:layout_marginEnd="20dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="15dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/start"
             app:layout_constraintEnd_toStartOf="@id/ResidualFilesCard"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -301,6 +305,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="10dp"
             app:cardElevation="15dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/start"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
