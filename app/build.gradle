@@ -11,7 +11,7 @@ plugins {
 android {
     signingConfigs {
         main {
-            storeFile file('C:\\Users\\Stanley\\AndroidStudio\\jre\\jre\\bin\\cleanner')
+            storeFile file('cleanner')
             storePassword 'clean2012'
             keyAlias 'key0'
             keyPassword 'clean2012'
@@ -24,8 +24,8 @@ android {
         applicationId "com.stenleone.clenner"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 5
-        versionName '1.0.3'
+        versionCode 6
+        versionName '1.0.4'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
