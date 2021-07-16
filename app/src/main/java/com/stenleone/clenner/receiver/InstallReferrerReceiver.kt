@@ -37,17 +37,17 @@ class InstallReferrerReceiver : BaseReceiver() {
 
             CoroutineScope(Dispatchers.IO).launch {
 
-                var mainUrl = configService.getStringAsync(Config.POST_USER_DATA_URL)
+                if (clId != "EMPTY_REFERRER") {
 
-                try {
-//                    apiService.sendSource(mainUrl + "${ApiService.POSTBACK}/?cnv_id=${clId}")
+                    var mainUrl = configService.getStringAsync(Config.POST_USER_DATA_URL)
 
-                    apiService.postUserAppOpen("${mainUrl}${clId}")
+                    try {
+                        apiService.postUserAppOpen("${mainUrl}${clId}")
+                    } catch (e: Exception) {
 
+                    }
                     prefs.isSendedDataAfterFirstOpen = true
                     this.cancel()
-                } catch (e: Exception) {
-
                 }
             }
 

@@ -39,11 +39,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            app:layout_constraintBottom_toTopOf="@+id/casheMemoryCard"
             android:id="@+id/progress_bg"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:src="@drawable/ic_system_cleaning_progress_bg"
+            app:layout_constraintBottom_toTopOf="@+id/casheMemoryCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleText" />
@@ -53,6 +53,7 @@
             style="@style/NormalText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="@string/cleaning_in_process"
             android:textColor="@color/gray_main"
             android:visibility="gone"
@@ -123,16 +124,16 @@
             android:id="@+id/casheMemoryCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="18dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="8dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toTopOf="@id/TotalMemoryCard"
             app:layout_constraintEnd_toStartOf="@id/temporaryFilesCard"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progress_bg"
+            app:layout_constraintTop_toBottomOf="@+id/cleanInProcessText"
             app:layout_constraintVertical_chainStyle="packed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -184,15 +185,15 @@
             android:id="@+id/temporaryFilesCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="18dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="8dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toTopOf="@id/ResidualFilesCard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toEndOf="@id/casheMemoryCard"
-            app:layout_constraintTop_toBottomOf="@+id/progress_bg"
+            app:layout_constraintTop_toBottomOf="@+id/cleanInProcessText"
             app:layout_constraintVertical_chainStyle="packed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -245,9 +246,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="15dp"
-            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/start"
             app:layout_constraintEnd_toStartOf="@id/ResidualFilesCard"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -303,9 +304,9 @@
             android:id="@+id/ResidualFilesCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="15dp"
-            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/start"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"

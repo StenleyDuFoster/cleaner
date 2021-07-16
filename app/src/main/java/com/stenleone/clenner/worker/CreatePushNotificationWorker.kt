@@ -1,5 +1,7 @@
 package com.stenleone.clenner.worker
 
+import android.app.Notification.DEFAULT_SOUND
+import android.app.Notification.DEFAULT_VIBRATE
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -10,6 +12,7 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.DEFAULT_ALL
 import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
@@ -33,11 +36,14 @@ class CreatePushNotificationWorker @AssistedInject constructor(
     companion object {
         const val TAG = "CreatePushNotificationWorker"
         const val DEF_PUSH_VALUE = "def"
+        const val NEED_CLEAN_GROUP = "CleanGroup"
+        const val CHANNEL_ID = "CLEANER_REGULAR_ID"
+        const val CHANNEL_NAME = "CLEANER_REGULAR_NAME"
 
         fun start(context: Context, timeShow: Int) {
 
             val workRequest = PeriodicWorkRequestBuilder<CreatePushNotificationWorker>(timeShow.toLong(), TimeUnit.HOURS)
-                .setInitialDelay(timeShow.toLong(), TimeUnit.HOURS)
+                .setInitialDelay(timeShow.toLong(), TimeUnit.HOURS) todo test
                 .addTag(TAG)
 
             WorkManager
@@ -113,12 +119,13 @@ class CreatePushNotificationWorker @AssistedInject constructor(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
-                    "CleanerId",
-                    "CleanerChannel",
-                    NotificationManager.IMPORTANCE_DEFAULT
+                    CHANNEL_ID,
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH
                 )
             )
         }
+
         return notificationManager
     }
 
@@ -127,7 +134,7 @@ class CreatePushNotificationWorker @AssistedInject constructor(
         notificationLayout.setTextViewText(R.id.title, title)
         notificationLayout.setTextViewText(R.id.subTitle, subTitle)
 
-        return NotificationCompat.Builder(context, "CleanerId")
+        return NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_app_logo)
             .setCustomContentView(notificationLayout)
             .setContentIntent(
@@ -140,7 +147,10 @@ class CreatePushNotificationWorker @AssistedInject constructor(
                     PendingIntent.FLAG_ONE_SHOT
                 )
             )
-            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setWhen(0)
+            .setDefaults(DEFAULT_ALL)
+            .setGroup(NEED_CLEAN_GROUP)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setVibrate(longArrayOf(500, 500, 500, 500))
             .setAutoCancel(true)

@@ -43,6 +43,19 @@
             app:layout_constraintStart_toEndOf="@+id/backButton"
             app:layout_constraintTop_toTopOf="@+id/backButton" />
 
+
+        <TextView
+            android:text="@string/cleaning_completed_success"
+            android:id="@+id/cleanSub"
+            style="@style/TitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cleanSuccessText" />
+
         <com.appodeal.ads.NativeMediaView
             android:id="@+id/nativeMedia"
             android:layout_width="0dp"
@@ -50,7 +63,7 @@
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cleanSuccessText" />
+            app:layout_constraintTop_toBottomOf="@+id/cleanSub" />
 
         <TextView
             android:id="@+id/nativeTitle"

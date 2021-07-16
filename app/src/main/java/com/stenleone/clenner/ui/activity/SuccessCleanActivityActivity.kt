@@ -32,11 +32,11 @@ class SuccessCleanActivityActivity(override var layId: Int = R.layout.activity_c
                 binding.nativeFeedAds.titleView = binding.nativeTitle
                 binding.nativeFeedAds.setNativeAd(it)
 
-                if (it.containsVideo()) {
-                    binding.nativeMedia.visibility = View.VISIBLE
-                } else {
-                    binding.nativeMedia.visibility = View.GONE
-                }
+//                if (it.containsVideo()) {
+//                    binding.nativeMedia.visibility = View.VISIBLE
+//                } else {
+//                    binding.nativeMedia.visibility = View.GONE
+//                }
             }
             Appodeal.cache(this, Appodeal.NATIVE)
         } else {

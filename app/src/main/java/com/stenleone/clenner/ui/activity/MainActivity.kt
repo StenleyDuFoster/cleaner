@@ -46,6 +46,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     private lateinit var viewPagerAdapter: FragmentsAdapter
     private var isFirstInternalShown = false
+    private var scanningTextAnimator: ValueAnimator? = null
 
     override fun setup(savedInstanceState: Bundle?) {
         savedInstanceState?.let {
@@ -90,7 +91,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
             CreatePushNotificationWorker.start(this@MainActivity, configString.getIntAsync(Config.SHOW_NOTIFICATION_TIME_IN_HOUR))
         }
 
-        if (!prefs.isSendedDataAfterFirstOpen) {
+        if (!prefs.isSendedDataAfterFirstOpen && !BuildConfig.DEBUG) {
             checkPostBack()
         }
     }
@@ -102,7 +103,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     private fun setupTextLoaderAnimator() {
         binding.apply {
-            ValueAnimator.ofInt(2).also { // todo add cancel logic
+            scanningTextAnimator = ValueAnimator.ofInt(2).also {
                 it.addUpdateListener {
                     when ((it.getAnimatedValue() as Int)) {
                         0 -> {
@@ -202,6 +203,8 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
     }
 
     private fun showMainContent() {
+        scanningTextAnimator?.cancel()
+        scanningTextAnimator = null
         ObjectAnimator.ofFloat(binding.rootLay, View.ALPHA, 1.0f).also {
             it.duration = 1000
             it.start()
@@ -214,7 +217,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
             registerReceiver(InstallReferrerReceiver(), IntentFilter("com.android.vending.INSTALL_REFERRER"))
             val build: InstallReferrerClient = InstallReferrerClient.newBuilder(this).build()
             build.startConnection(object : InstallReferrerStateListener {
-                override fun onInstallReferrerServiceDisconnected() {}
+                override fun onInstallReferrerServiceDisconnected() = Unit
                 override fun onInstallReferrerSetupFinished(i: Int) {
                     if (i == 0) {
                         try {
