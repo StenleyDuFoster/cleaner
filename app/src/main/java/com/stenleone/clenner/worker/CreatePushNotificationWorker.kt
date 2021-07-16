@@ -1,7 +1,5 @@
 package com.stenleone.clenner.worker
 
-import android.app.Notification.DEFAULT_SOUND
-import android.app.Notification.DEFAULT_VIBRATE
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -67,9 +65,9 @@ class CreatePushNotificationWorker @AssistedInject constructor(
             1 -> {
                 title = configService.getStringAsync(Config.CLEAN_PUSH_TITLE)
                 subTitle = configService.getStringAsync(Config.CLEAN_PUSH_SUB_TITLE)
-               try {
-                   mainColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_MAIN))
-                   subColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_SUB))
+                try {
+                    mainColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_MAIN))
+                    subColor = Color.parseColor(configService.getStringAsync(Config.PUSH_COLOR_SUB))
                 } catch (e: Exception) {
 
                 }
