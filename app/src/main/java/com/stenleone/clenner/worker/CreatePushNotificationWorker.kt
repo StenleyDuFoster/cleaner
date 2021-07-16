@@ -43,7 +43,7 @@ class CreatePushNotificationWorker @AssistedInject constructor(
         fun start(context: Context, timeShow: Int) {
 
             val workRequest = PeriodicWorkRequestBuilder<CreatePushNotificationWorker>(timeShow.toLong(), TimeUnit.HOURS)
-                .setInitialDelay(timeShow.toLong(), TimeUnit.HOURS) todo test
+                .setInitialDelay(timeShow.toLong(), TimeUnit.HOURS)
                 .addTag(TAG)
 
             WorkManager
