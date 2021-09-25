@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/cleaner/app/src/main/res/drawable-xhdpi/ic_btn_text_alarm.xml" value="0.21875" />
+        <entry key="..\:/cleaner/app/src/main/res/drawable-xhdpi/ic_trash_can.xml" value="0.3" />
+        <entry key="..\:/cleaner/app/src/main/res/layout/activity_clean_success.xml" value="0.3625" />
+        <entry key="..\:/cleaner/app/src/main/res/layout/alarm_notification.xml" value="0.3625" />
+        <entry key="..\:/cleaner/app/src/main/res/layout/alarm_notification3.xml" value="0.3625" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

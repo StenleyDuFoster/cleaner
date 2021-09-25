@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Smart Cleaner Light</string>
+
+    <string name="system_cleaning">Pembersihan Sistem</string>
+    <string name="memory_cleaning">Pembersihan Memori</string>
+    <string name="battery_optimization">Pengoptimalan Baterai</string>
+    <string name="cpu_cooling">Pendinginan CPU</string>
+
+    <string name="mb" translatable="false">MB</string>
+    <string name="mb_lower_case" translatable="false">Mb</string>
+
+    <string name="cashe_memory">Cache Memori</string>
+    <string name="temporary_files">File Sementara</string>
+    <string name="total_memory">Memori Total</string>
+    <string name="usage_memory">Memori Penggunaan</string>
+    <string name="residual_files">File Sisa</string>
+
+    <string name="start">Mulai</string>
+    <string name="consumed">DIKONSUMSI</string>
+    <string name="temperature_normal">NORMAL</string>
+    <string name="temperature_high">TINGGI</string>
+
+    <string name="cleaning_in_process">Pembersihan dalam proses %s %%</string>
+    <string name="scanning_in_progress">Pemindaian %s</string>
+
+    <string name="normal">Normal</string>
+    <string name="high">Tinggi</string>
+    <string name="maximum">Maksimum</string>
+
+    <string name="five_hours">5 jam</string>
+    <string name="nine_hours">9 jam</string>
+    <string name="fourteen_hours">14 jam</string>
+
+    <string name="hours">JAM</string>
+    <string name="degree">°</string>
+
+    <string name="cleaning_success">Pembersihan Berhasil</string>
+    <string name="cleaning_completed_success" tools:ignore="ExtraTranslation">Pembersihan berhasil diselesaikan</string>
+
+</resources>

@@ -13,6 +13,22 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="oppo.permission.OPPO_COMPONENT_SAFE" />
+    <uses-permission android:name="com.huawei.permission.external_app_settings.USE_COMPONENT" />
+
+    <!--    Lates ones-->
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+
+    <!-- For notification-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <application
         android:name="Application"
@@ -38,7 +54,7 @@
         <activity
             android:name=".ui.activity.ActivityCloserPush"
             android:excludeFromRecents="true"
-            android:taskAffinity=""></activity>
+            android:taskAffinity="" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
@@ -57,6 +73,11 @@
             </intent-filter>
         </service>
 
+        <!--        <service-->
+        <!--            android:name="androidx.work.impl.foreground.SystemForegroundService"-->
+        <!--            android:foregroundServiceType="location|microphone"-->
+        <!--            tools:node="merge" />-->
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_app_logo" />
@@ -68,6 +89,26 @@
             android:value="main_channel" />
 
         <receiver android:name=".receiver.InstallReferrerReceiver" />
+        <receiver android:name="com.io.notification.AlertReceiver" />
+
+        <!--For notification-->
+        <service
+            android:name=".service.AlarmNotificationService"
+            android:enabled="true"/>
+        <receiver android:name=".receiver.AlarmNotificationReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="PUSH"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.CheckStateScreenReceiver"
+            android:enabled="true">
+            <intent-filter android:priority="999">
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.intent.action.ACTION_SCREEN_OFF"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

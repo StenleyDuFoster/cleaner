@@ -37,6 +37,13 @@
 
     <string name="cleaning_success">Cleaning Success</string>
 
+
+    <string name="text_alarm_notification_1" translatable="false">You have not cleaned your phone for 1 day.</string>
+    <string name="text_alarm_notification_2" translatable="false">12 running applications have been detected that consume your battery.</string>
+    <string name="text_alarm_notification_3" translatable="false">Detected some apps slowing down charging speed.</string>
+
+    <string name="text_alarm_notification_header" translatable="false">Phone Cleaner</string>
+
     <string name="add_mob_ads_app_id" translatable="false">ca-app-pub-8264479940846781~6690766702</string>
     <string name="appo_daeal_ads_app_id" translatable="false">021ae3aeb84cb44fdc8c9d02d7d9aa9835ee697255cd6d35</string>
 

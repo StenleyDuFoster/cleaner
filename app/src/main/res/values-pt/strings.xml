@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" translatable="false">Smart Cleaner Light</string>
+
+    <string name="system_cleaning">Limpeza do Sistema</string>
+    <string name="memory_cleaning">Limpeza da Memória</string>
+    <string name="battery_optimization">Otimização da Bateria</string>
+    <string name="cpu_cooling">Resfriamento da CPU</string>
+
+    <string name="mb" translatable="false">MB</string>
+    <string name="mb_lower_case" translatable="false">Mb</string>
+
+    <string name="cashe_memory">Memória Cashe</string>
+    <string name="temporary_files">Ficheiros Temporários</string>
+    <string name="total_memory">Memória Total</string>
+    <string name="usage_memory">Memória de Utilização</string>
+    <string name="residual_files">Ficheiros Residuais</string>
+
+    <string name="start">Começar</string>
+    <string name="consumed">UTILIZADO</string>
+    <string name="temperature_normal">NORMAL</string>
+    <string name="temperature_high">ALTO</string>
+
+    <string name="cleaning_in_process">Limpeza em processamento %s %%</string>
+    <string name="scanning_in_progress">Digitalizando %s</string>
+
+    <string name="normal">Normal</string>
+    <string name="high">Alto</string>
+    <string name="maximum">Máximo</string>
+
+    <string name="five_hours">5 horas</string>
+    <string name="nine_hours">9 horas</string>
+    <string name="fourteen_hours">14 horas</string>
+
+    <string name="hours">HORAS</string>
+    <string name="degree">°</string>
+
+    <string name="cleaning_success">Limpeza Bem-sucedida</string>
+    <string name="cleaning_completed_success" tools:ignore="ExtraTranslation">Limpeza concluída com sucesso</string>
+
+</resources>

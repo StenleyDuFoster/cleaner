@@ -2,27 +2,35 @@ package com.stenleone.clenner.ui.activity
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
+import androidx.work.*
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.BannerCallbacks
 import com.appodeal.ads.InterstitialCallbacks
-import com.appodeal.ads.Native
-import com.google.firebase.firestore.FirebaseFirestore
 import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityMainBinding
 import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
+import com.stenleone.clenner.receiver.AlarmNotificationReceiver
+import com.stenleone.clenner.receiver.CheckStateScreenReceiver
 import com.stenleone.clenner.receiver.InstallReferrerReceiver
+import com.stenleone.clenner.service.AlarmNotificationService
 import com.stenleone.clenner.ui.activity.base.BaseActivity
 import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
@@ -30,10 +38,14 @@ import com.stenleone.clenner.worker.CreateOrUpdateNotificationWorker
 import com.stenleone.clenner.worker.CreatePushNotificationWorker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActivity<ActivityMainBinding>() {
+class MainActivity(override var layId: Int = R.layout.activity_main) :
+    BaseActivity<ActivityMainBinding>() {
 
     companion object {
         const val SAVED_SHOWN_INTERNAL = "saved_isFirstInternalShown"
@@ -41,6 +53,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     @Inject
     lateinit var prefs: SharedPreferences
+    val isShown = false
 
     @Inject
     lateinit var configString: ConfigService
@@ -48,21 +61,43 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
     private lateinit var viewPagerAdapter: FragmentsAdapter
     private var isFirstInternalShown = false
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun setup(savedInstanceState: Bundle?) {
+
         savedInstanceState?.let {
             it.getBoolean(SAVED_SHOWN_INTERNAL)?.let {
                 isFirstInternalShown = it
+                Log.d("test", "it")
             }
         }
 
+        showCustomPopupMenu()
         setupAppoDeal()
         setupViewPagerAndBottomNav()
         setupDefaultValues()
         setupTextLoaderAnimator()
+        setUpAlarmNotification()
+        checkFirstOpen()
     }
 
-    override fun onStart() {
-        super.onStart()
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun showCustomPopupMenu() {
+
+//        if (!Settings.canDrawOverlays(this)) {
+//            val intent =
+//                Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
+//            startActivityForResult(intent, 1234)
+//        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        startService(Intent(this, AlarmNotificationService::class.java))
         if (Appodeal.isInitialized(Appodeal.INTERSTITIAL)) {
             showMainContent()
         }
@@ -88,13 +123,61 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
     private fun setupDefaultValues() {
         CreateOrUpdateNotificationWorker.start(this)
         lifecycleScope.launch {
-            CreatePushNotificationWorker.start(this@MainActivity, configString.getIntAsync(Config.SHOW_NOTIFICATION_TIME_IN_HOUR))
+            CreatePushNotificationWorker.start(
+                this@MainActivity,
+                configString.getIntAsync(Config.SHOW_NOTIFICATION_TIME_IN_HOUR)
+            )
         }
-
         if (!prefs.isSendedDataAfterFirstOpen) {
             checkPostBack()
         }
     }
+
+    private fun setUpAlarmNotification(){
+        val notifyIntent = Intent(this, AlarmNotificationReceiver::class.java)
+        notifyIntent.action = "PUSH"
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            0,
+            notifyIntent,
+            0
+        )
+        var alarmManager: AlarmManager =
+            this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+
+//        val h = 20
+//        val m = 0
+        val h = calendar.get(Calendar.HOUR_OF_DAY)
+        val m = calendar.get(Calendar.MINUTE) + 1
+        calendar.set(Calendar.HOUR_OF_DAY, h)
+        calendar.set(Calendar.MINUTE, m)
+
+        val sdf1 = SimpleDateFormat("HH", Locale.getDefault())
+        val timeHours: String = sdf1.format(Date())
+        val sdf2 = SimpleDateFormat("mm", Locale.getDefault())
+        val timeMinute: String = sdf2.format(Date())
+//        if (Integer.parseInt(timeHours) >= h && Integer.parseInt(timeMinute) >= m){
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC, calendar.timeInMillis + 1000 * 60 * 60 * 24, pendingIntent)
+//            }else{
+//                alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis + 1000 * 60 * 60 * 24, pendingIntent)
+//
+//            }
+//        }else{
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
+//            }else{
+//                alarmManager.setExact(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
+//
+//            }
+//        }
+
+
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -123,12 +206,15 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
                 it.start()
             }
         }
-
     }
 
     private fun setupAppoDeal() {
 
-        Appodeal.initialize(this, getString(R.string.appo_daeal_ads_app_id), Appodeal.INTERSTITIAL or Appodeal.NATIVE or Appodeal.BANNER)
+        Appodeal.initialize(
+            this,
+            getString(R.string.appo_daeal_ads_app_id),
+            Appodeal.INTERSTITIAL or Appodeal.NATIVE or Appodeal.BANNER
+        )
 
         Appodeal.disableLocationPermissionCheck()
         Appodeal.setBannerViewId(R.id.appodealBannerView)
@@ -142,7 +228,9 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
         Appodeal.cache(this, Appodeal.NATIVE)
         Appodeal.setBannerCallbacks(object : BannerCallbacks {
             override fun onBannerLoaded(p0: Int, p1: Boolean) {
-                binding.appodealBannerView.minimumHeight = (p0.toFloat() * (this@MainActivity.getResources().getDisplayMetrics().densityDpi / 160.0f)).toInt()
+                binding.appodealBannerView.minimumHeight =
+                    (p0.toFloat() * (this@MainActivity.getResources()
+                        .getDisplayMetrics().densityDpi / 160.0f)).toInt()
                 binding.appodealBannerView.visibility = View.VISIBLE
             }
 
@@ -211,7 +299,10 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
 
     private fun checkPostBack() {
         try {
-            registerReceiver(InstallReferrerReceiver(), IntentFilter("com.android.vending.INSTALL_REFERRER"))
+            registerReceiver(
+                InstallReferrerReceiver(),
+                IntentFilter("com.android.vending.INSTALL_REFERRER")
+            )
             val build: InstallReferrerClient = InstallReferrerClient.newBuilder(this).build()
             build.startConnection(object : InstallReferrerStateListener {
                 override fun onInstallReferrerServiceDisconnected() {}
@@ -219,7 +310,8 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
                     if (i == 0) {
                         try {
 //                            Sentry.captureMessage("All Ok for send INSTALL_REFERRER event")
-                            val installReferrer: String = build.getInstallReferrer().getInstallReferrer()
+                            val installReferrer: String =
+                                build.getInstallReferrer().getInstallReferrer()
                             val intent = Intent()
                             intent.action = "com.android.vending.INSTALL_REFERRER"
                             intent.putExtra("referrer", installReferrer)
@@ -243,5 +335,49 @@ class MainActivity(override var layId: Int = R.layout.activity_main) : BaseActiv
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
         outState.putBoolean(SAVED_SHOWN_INTERNAL, isFirstInternalShown)
+    }
+
+    fun checkFirstOpen() {
+        if (getIsFirstOpen(this)) {
+            val notifyIntent = Intent(this, AlarmNotificationReceiver::class.java)
+            notifyIntent.action = "PUSH"
+            val pendingIntent = PendingIntent.getBroadcast(
+                this,
+                0,
+                notifyIntent,
+                0
+            )
+            Log.d("test", "set first")
+            var alarmManager: AlarmManager =
+                this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+            val calendar: Calendar = Calendar.getInstance()
+            calendar.timeInMillis = System.currentTimeMillis()
+            val h = calendar.get(Calendar.HOUR_OF_DAY)
+            val m = calendar.get(Calendar.MINUTE)
+            calendar.set(Calendar.HOUR_OF_DAY, h + 2)
+            calendar.set(Calendar.MINUTE, m)
+
+            alarmManager.setExact(
+                AlarmManager.RTC,
+                calendar.timeInMillis ,
+                pendingIntent
+            )
+        }
+        setIsFirstOpen(this)
+    }
+
+    private fun getIsFirstOpen(context: Context): Boolean {
+        val mSettings = context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE)
+
+        return mSettings.getBoolean("isFirstOpen", true)
+    }
+
+    private fun setIsFirstOpen(context: Context) {
+        val mSettings = context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE)
+
+        val editor = mSettings.edit()
+        editor.putBoolean("isFirstOpen", false)
+        editor.apply()
     }
 }
