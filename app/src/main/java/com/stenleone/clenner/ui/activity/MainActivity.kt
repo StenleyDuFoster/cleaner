@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
 import androidx.work.*
 import com.android.installreferrer.api.InstallReferrerClient
@@ -97,6 +98,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setLastAlarmNotificationIsClosed(this, true)
         startService(Intent(this, AlarmNotificationService::class.java))
         if (Appodeal.isInitialized(Appodeal.INTERSTITIAL)) {
             showMainContent()
@@ -151,9 +153,11 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
 //        val h = 20
 //        val m = 0
         val h = calendar.get(Calendar.HOUR_OF_DAY)
-        val m = calendar.get(Calendar.MINUTE) + 1
-        calendar.set(Calendar.HOUR_OF_DAY, h)
+        val m = calendar.get(Calendar.MINUTE)
         calendar.set(Calendar.MINUTE, m)
+        calendar.set(Calendar.HOUR_OF_DAY, h + 2)
+//            calendar.set(Calendar.MINUTE, m + 1)
+//            calendar.set(Calendar.HOUR_OF_DAY, h)
 
         val sdf1 = SimpleDateFormat("HH", Locale.getDefault())
         val timeHours: String = sdf1.format(Date())
@@ -338,33 +342,10 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
     }
 
     fun checkFirstOpen() {
-        if (getIsFirstOpen(this)) {
-            val notifyIntent = Intent(this, AlarmNotificationReceiver::class.java)
-            notifyIntent.action = "PUSH"
-            val pendingIntent = PendingIntent.getBroadcast(
-                this,
-                0,
-                notifyIntent,
-                0
-            )
-            Log.d("test", "set first")
-            var alarmManager: AlarmManager =
-                this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-            val calendar: Calendar = Calendar.getInstance()
-            calendar.timeInMillis = System.currentTimeMillis()
-            val h = calendar.get(Calendar.HOUR_OF_DAY)
-            val m = calendar.get(Calendar.MINUTE)
-            calendar.set(Calendar.HOUR_OF_DAY, h + 2)
-            calendar.set(Calendar.MINUTE, m)
-
-            alarmManager.setExact(
-                AlarmManager.RTC,
-                calendar.timeInMillis ,
-                pendingIntent
-            )
-        }
-        setIsFirstOpen(this)
+//        if (getIsFirstOpen(this)) {
+//            AlarmNotificationService.updateSingleAlarm(this)
+//        }
+//        setIsFirstOpen(this)
     }
 
     private fun getIsFirstOpen(context: Context): Boolean {
@@ -379,5 +360,15 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
         val editor = mSettings.edit()
         editor.putBoolean("isFirstOpen", false)
         editor.apply()
+    }
+
+    private val LAST_ALARM_NOTIFICATION_IS_CLOSED = "LAST_ALARM_NOTIFICATION_IS_CLOSED"
+    private fun getLastAlarmNotificationIsClosed(context: Context): Boolean {
+        return context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE).getBoolean(LAST_ALARM_NOTIFICATION_IS_CLOSED, true)
+    }
+    private fun setLastAlarmNotificationIsClosed(context: Context, value: Boolean) {
+        context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE).edit {
+            putBoolean(LAST_ALARM_NOTIFICATION_IS_CLOSED, value)
+        }
     }
 }
