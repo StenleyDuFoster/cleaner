@@ -87,8 +87,6 @@ class AlarmNotificationService : Service() {
 
             val calendar: Calendar = Calendar.getInstance()
             calendar.timeInMillis = System.currentTimeMillis()
-//            calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 10)
-//            calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY))
             calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE))
             calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 2)
 

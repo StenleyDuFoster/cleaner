@@ -38,4 +38,8 @@
     <string name="cleaning_success">Pembersihan Berhasil</string>
     <string name="cleaning_completed_success" tools:ignore="ExtraTranslation">Pembersihan berhasil diselesaikan</string>
 
+    <string name="text_alarm_notification_1">Anda belum membersihkan ponsel Anda selama 1 hari.</string>
+    <string name="text_alarm_notification_2">12 aplikasi berjalan yang menghabiskan baterai Anda telah terdeteksi.</string>
+    <string name="text_alarm_notification_3">Terdeteksi beberapa aplikasi yang memperlambat kecepatan pengisian daya.</string>
+
 </resources>

@@ -38,4 +38,8 @@
     <string name="cleaning_success">Limpieza exitosa</string>
 
     <string name="cleaning_completed_success" tools:ignore="ExtraTranslation">Limpieza completada con éxito</string>
+
+    <string name="text_alarm_notification_1">No has limpiado tu teléfono desde hace 1 día.</string>
+    <string name="text_alarm_notification_2">Se han detectado 12 aplicaciones en ejecución que consumen batería.</string>
+    <string name="text_alarm_notification_3">Se han detectado algunas aplicaciones que ralentizan la velocidad de carga.</string>
 </resources>
