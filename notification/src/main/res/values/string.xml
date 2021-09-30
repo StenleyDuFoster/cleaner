@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="clean_phone">Очиститель телефона</string>
+    <string name="clean_trash">Очистите ваше устройство от мусора.</string>
+    <string name="manage">Управлять</string>
+</resources>

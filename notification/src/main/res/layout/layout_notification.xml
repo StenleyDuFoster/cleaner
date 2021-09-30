@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:minHeight="64dp"
+    android:maxHeight="256dp"
+    android:background="@color/white"
+    android:layout_marginTop="2dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="16sp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16sp"
+        android:layout_weight="1"
+        android:clipToPadding="false">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/NotifyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="5"
+            android:text="@string/clean_phone"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:includeFontPadding="false"
+            android:src="@drawable/ic_close" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16sp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:includeFontPadding="false"
+            android:src="@drawable/ic_notify_trash" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            style="@style/NotifyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/clean_trash" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16sp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_blue_8dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:layout_marginBottom="2dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="4dp"
+        android:text="@string/manage"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        tools:ignore="SmallSp" />
+</LinearLayout>
