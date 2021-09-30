@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.core.content.edit
 import com.stenleone.clenner.util.notification.CleanAlertNotification
 
 class NotificationDismissReceiver: BroadcastReceiver() {

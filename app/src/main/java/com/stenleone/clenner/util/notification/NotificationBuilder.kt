@@ -11,7 +11,6 @@ import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
-import com.stenleone.clenner.receiver.NotificationDismissReceiver
 import com.stenleone.clenner.ui.activity.MainActivity
 
 class NotificationBuilder(

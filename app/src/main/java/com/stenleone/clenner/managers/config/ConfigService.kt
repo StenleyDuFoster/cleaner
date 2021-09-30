@@ -9,7 +9,6 @@ import com.google.gson.Gson
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class ConfigService @Inject constructor() {

@@ -12,7 +12,6 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
@@ -29,7 +28,6 @@ import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
 import com.stenleone.clenner.receiver.AlarmNotificationReceiver
-import com.stenleone.clenner.receiver.CheckStateScreenReceiver
 import com.stenleone.clenner.receiver.InstallReferrerReceiver
 import com.stenleone.clenner.service.AlarmNotificationService
 import com.stenleone.clenner.ui.activity.base.BaseActivity
