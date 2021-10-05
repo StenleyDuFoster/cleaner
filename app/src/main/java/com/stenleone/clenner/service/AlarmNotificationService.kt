@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
 import com.stenleone.clenner.receiver.AlarmNotificationReceiver
 import com.stenleone.clenner.receiver.CheckStateScreenReceiver
@@ -83,8 +84,13 @@ class AlarmNotificationService : Service() {
 
             val calendar: Calendar = Calendar.getInstance()
             calendar.timeInMillis = System.currentTimeMillis()
-            calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE))
-            calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 2)
+            if (BuildConfig.DEBUG) {
+                calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 5)
+                calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY))
+            } else {
+                calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE))
+                calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 2)
+            }
 
             alarmManager.setExact(
                 AlarmManager.RTC,
