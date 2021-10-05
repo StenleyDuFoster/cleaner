@@ -1,15 +1,20 @@
 package com.stenleone.clenner.ui.activity
 
 import android.os.Bundle
-import android.view.View
-import androidx.core.content.ContextCompat
+import android.view.ViewGroup.OnHierarchyChangeListener
 import androidx.lifecycle.lifecycleScope
-import com.appodeal.ads.Appodeal
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityCleanSuccessBinding
 import com.stenleone.clenner.ui.activity.base.BaseActivity
 import com.stenleone.stanleysfilm.util.extencial.throttleClicks
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_clean_success.*
+
 
 @AndroidEntryPoint
 class SuccessCleanActivityActivity(override var layId: Int = R.layout.activity_clean_success) : BaseActivity<ActivityCleanSuccessBinding>() {
@@ -17,31 +22,25 @@ class SuccessCleanActivityActivity(override var layId: Int = R.layout.activity_c
     override fun setup(savedInstanceState: Bundle?) {
 
         setupClicks()
-        setupNativeAds()
+        setupAdMob()
     }
 
-    private fun setupNativeAds() {
-
-        if (Appodeal.isLoaded(Appodeal.NATIVE)) {
-
-            val nativeAds = Appodeal.getNativeAds(1)
-
-            nativeAds.firstOrNull()?.let {
-                binding.nativeFeedAds.nativeMediaView = binding.nativeMedia
-                binding.nativeFeedAds.setCallToActionColor(ContextCompat.getColor(this, R.color.black))
-                binding.nativeFeedAds.titleView = binding.nativeTitle
-                binding.nativeFeedAds.setNativeAd(it)
-
-                if (it.containsVideo()) {
-                    binding.nativeMedia.visibility = View.VISIBLE
-                } else {
-                    binding.nativeMedia.visibility = View.GONE
+    private fun setupAdMob() {
+        val adLoader = AdLoader.Builder(this, getString(R.string.ad_native_id))
+            .forNativeAd {
+                nativeFeedAds.apply {
+                    mediaView = nativeMedia
+                    headlineView = nativeTitle
+                    setNativeAd(it)
                 }
             }
-            Appodeal.cache(this, Appodeal.NATIVE)
-        } else {
-            Appodeal.cache(this, Appodeal.NATIVE)
-        }
+            .withAdListener(object : AdListener() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                }
+            })
+            .withNativeAdOptions(NativeAdOptions.Builder().build())
+            .build()
+        adLoader.loadAd(AdRequest.Builder().build())
 
     }
 

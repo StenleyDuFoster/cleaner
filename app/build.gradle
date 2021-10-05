@@ -88,8 +88,7 @@ dependencies {
 
     api 'tk.zielony:carbon:0.16.0.1'//--------------------------------------------------------------Colored shadows
 
-    implementation 'com.appodeal.ads.sdk:core:2.10.1'
-    implementation 'com.appodeal.ads.sdk.networks:admob:2.10.1.11'
+    implementation 'com.google.android.gms:play-services-ads:20.4.0'//------------------------------Ads
 
     implementation 'com.google.android.gms:play-services-location:18.0.0'
 

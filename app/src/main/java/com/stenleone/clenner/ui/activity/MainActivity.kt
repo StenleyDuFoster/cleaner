@@ -14,14 +14,14 @@ import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.edit
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.work.*
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
-import com.appodeal.ads.Appodeal
-import com.appodeal.ads.BannerCallbacks
-import com.appodeal.ads.InterstitialCallbacks
-import com.stenleone.clenner.BuildConfig
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.stenleone.clenner.R
 import com.stenleone.clenner.databinding.ActivityMainBinding
 import com.stenleone.clenner.managers.config.Config
@@ -36,6 +36,7 @@ import com.stenleone.clenner.util.bind.BindViewPager
 import com.stenleone.clenner.worker.CreateOrUpdateNotificationWorker
 import com.stenleone.clenner.worker.CreatePushNotificationWorker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,6 +49,10 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
 
     companion object {
         const val SAVED_SHOWN_INTERNAL = "saved_isFirstInternalShown"
+
+        fun newInstant(context: Context, internalAd: Boolean) = Intent(context, MainActivity::class.java).apply {
+            putExtra(SAVED_SHOWN_INTERNAL, internalAd)
+        }
     }
 
     @Inject
@@ -71,7 +76,7 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
         }
 
         showCustomPopupMenu()
-        setupAppoDeal()
+        setupAdMob()
         setupViewPagerAndBottomNav()
         setupDefaultValues()
         setupTextLoaderAnimator()
@@ -98,9 +103,6 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
         super.onCreate(savedInstanceState)
         setLastAlarmNotificationIsClosed(this, true)
         startService(Intent(this, AlarmNotificationService::class.java))
-        if (Appodeal.isInitialized(Appodeal.INTERSTITIAL)) {
-            showMainContent()
-        }
     }
 
     private fun setupViewPagerAndBottomNav() {
@@ -183,7 +185,6 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
 
     override fun onResume() {
         super.onResume()
-        Appodeal.show(this, Appodeal.BANNER_VIEW)
     }
 
     private fun setupTextLoaderAnimator() {
@@ -210,85 +211,37 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
         }
     }
 
-    private fun setupAppoDeal() {
+    private fun setupAdMob() {
+        MobileAds.initialize(this) {}
 
-        Appodeal.initialize(
-            this,
-            getString(R.string.appo_daeal_ads_app_id),
-            Appodeal.INTERSTITIAL or Appodeal.NATIVE or Appodeal.BANNER
-        )
+        adBannerView.apply {
+            loadAd(AdRequest.Builder().build())
+            adListener = object : AdListener() {
+                override fun onAdLoaded() {
+                    super.onAdLoaded()
+                    adBannerView.isVisible = true
+                }
 
-        Appodeal.disableLocationPermissionCheck()
-        Appodeal.setBannerViewId(R.id.appodealBannerView)
-        Appodeal.show(this, Appodeal.BANNER_VIEW)
-
-        if (BuildConfig.DEBUG) {
-            Appodeal.setTesting(true)
+                override fun onAdFailedToLoad(p0: LoadAdError) {
+                    super.onAdFailedToLoad(p0)
+                }
+            }
         }
 
-        Appodeal.cache(this, Appodeal.INTERSTITIAL)
-        Appodeal.cache(this, Appodeal.NATIVE)
-        Appodeal.setBannerCallbacks(object : BannerCallbacks {
-            override fun onBannerLoaded(p0: Int, p1: Boolean) {
-                binding.appodealBannerView.minimumHeight =
-                    (p0.toFloat() * (this@MainActivity.getResources()
-                        .getDisplayMetrics().densityDpi / 160.0f)).toInt()
-                binding.appodealBannerView.visibility = View.VISIBLE
-            }
-
-            override fun onBannerFailedToLoad() {
-                binding.appodealBannerView.visibility = View.VISIBLE
-            }
-
-            override fun onBannerShown() {
-                binding.appodealBannerView.visibility = View.VISIBLE
-            }
-
-            override fun onBannerShowFailed() {
-                binding.appodealBannerView.visibility = View.VISIBLE
-            }
-
-            override fun onBannerClicked() = Unit
-
-            override fun onBannerExpired() = Unit
-
-        })
-
-        Appodeal.setInterstitialCallbacks(object : InterstitialCallbacks {
-            override fun onInterstitialLoaded(p0: Boolean) {
+        InterstitialAd.load(this, getString(R.string.ad_interstitial_id), AdRequest.Builder().build(), object : InterstitialAdLoadCallback() {
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
                 if (!isFirstInternalShown) {
-                    Appodeal.show(this@MainActivity, Appodeal.INTERSTITIAL)
-                    Appodeal.cache(this@MainActivity, Appodeal.INTERSTITIAL)
+                    interstitialAd.show(this@MainActivity)
                     isFirstInternalShown = true
                 }
                 showMainContent()
             }
 
-            override fun onInterstitialFailedToLoad() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
                 showMainContent()
             }
-
-            override fun onInterstitialShown() {
-
-            }
-
-            override fun onInterstitialShowFailed() {
-                showMainContent()
-            }
-
-            override fun onInterstitialClicked() {
-
-            }
-
-            override fun onInterstitialClosed() {
-
-            }
-
-            override fun onInterstitialExpired() {
-
-            }
-
         })
+
     }
 
     private fun showMainContent() {

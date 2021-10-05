@@ -131,12 +131,12 @@ class CleanAlertNotification {
         }
 
         private fun Context.getFullScreenPendingIntent(): PendingIntent {
-            val intent = Intent(this, MainActivity::class.java)
+                val intent = MainActivity.newInstant(this, true)
             return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
         private fun Context.getFullScreenPendingIntent2(): PendingIntent {
-            val intent = Intent()
+            val intent = MainActivity.newInstant(this, true)
             return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
     }

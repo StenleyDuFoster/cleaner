@@ -40,14 +40,16 @@
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/backButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/backButton"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/backButton" />
 
-        <com.appodeal.ads.NativeMediaView
+        <com.google.android.gms.ads.nativead.MediaView
             android:id="@+id/nativeMedia"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cleanSuccessText" />
@@ -59,10 +61,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nativeMedia" />
 
-        <com.appodeal.ads.native_ad.views.NativeAdViewNewsFeed
+        <com.google.android.gms.ads.nativead.NativeAdView
             android:id="@+id/nativeFeedAds"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
