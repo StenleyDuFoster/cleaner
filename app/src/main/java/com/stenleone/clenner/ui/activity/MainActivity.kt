@@ -49,10 +49,6 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
 
     companion object {
         const val SAVED_SHOWN_INTERNAL = "saved_isFirstInternalShown"
-
-        fun newInstant(context: Context, internalAd: Boolean) = Intent(context, MainActivity::class.java).apply {
-            putExtra(SAVED_SHOWN_INTERNAL, internalAd)
-        }
     }
 
     @Inject
