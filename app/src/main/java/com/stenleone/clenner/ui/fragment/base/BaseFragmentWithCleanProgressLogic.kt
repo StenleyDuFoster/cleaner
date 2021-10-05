@@ -27,7 +27,9 @@ abstract class BaseFragmentWithCleanProgressLogic<T : ViewDataBinding> : BaseFra
 
     private fun checkIfCleanFinished(newProgress: Int, animatedProgress: Int) {
         if (newProgress == 100 && animatedProgress == 100) {
-            cleanSuccess()
+            if (isAdded) {
+                cleanSuccess()
+            }
             InterstitialAd.load(requireContext(), getString(R.string.ad_interstitial_id), AdRequest.Builder().build(), object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
                     interstitialAd.show(requireActivity())
