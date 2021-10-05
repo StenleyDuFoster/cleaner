@@ -16,8 +16,8 @@ android {
         applicationId "com.stenleone.clenner"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 15
-        versionName '1.1.3'
+        versionCode 17
+        versionName '1.1.5'
 
         archivesBaseName = "Cleaner-${versionName}-${versionCode}"
 
