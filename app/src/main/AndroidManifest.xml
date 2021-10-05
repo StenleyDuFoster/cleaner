@@ -90,7 +90,7 @@
             android:value="main_channel" />
 
         <receiver android:name=".receiver.InstallReferrerReceiver" />
-        <receiver android:name="com.io.notification.AlertReceiver" />
+<!--        <receiver android:name="com.io.notification.AlertReceiver" />-->
 
         <!--For notification-->
         <service
