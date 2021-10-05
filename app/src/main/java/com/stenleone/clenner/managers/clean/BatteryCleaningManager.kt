@@ -1,13 +1,16 @@
 package com.stenleone.clenner.managers.clean
 
+import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.stenleone.clenner.util.enum.BatteryClean
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -93,16 +96,24 @@ class BatteryCleaningManager @Inject constructor(@ApplicationContext private val
         }
     }
 
+    private fun manualOffWifi() {
+        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_WIFI_STATE)) {
+            val panelIntent = Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)
+            panelIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.applicationContext.startActivity(panelIntent)
+        }
+        Toast.makeText(context, "Turn off Wi-Fi", Toast.LENGTH_SHORT).show()
+    }
+
     private fun turnOffWiFi() {
         val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         if (wifiManager.isWifiEnabled) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                val panelIntent = Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)
-                panelIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.applicationContext.startActivity(panelIntent)
-                Toast.makeText(context, "Turn off Wi-Fi", Toast.LENGTH_SHORT).show()
+                manualOffWifi()
             } else {
-                wifiManager.isWifiEnabled = true
+                if (!wifiManager.setWifiEnabled(true)) {
+                    manualOffWifi()
+                }
             }
         }
     }
