@@ -7,12 +7,15 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -35,6 +38,7 @@ import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
 import com.stenleone.clenner.worker.CreateOrUpdateNotificationWorker
 import com.stenleone.clenner.worker.CreatePushNotificationWorker
+import com.stenleone.stanleysfilm.util.extencial.throttleClicks
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
@@ -65,6 +69,9 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
     private lateinit var viewPagerAdapter: FragmentsAdapter
     private var isFirstInternalShown = false
 
+    private var interstitialAd: InterstitialAd? = null
+    private var interstitialAdFail: Boolean? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun setup(savedInstanceState: Bundle?) {
 
@@ -75,13 +82,41 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
             }
         }
 
-        showCustomPopupMenu()
+        if (!prefs.isUserAcceptPolicy) {
+            setupPolicyView()
+        }
+
         setupAdMob()
+        showCustomPopupMenu()
         setupViewPagerAndBottomNav()
         setupDefaultValues()
         setupTextLoaderAnimator()
         setUpAlarmNotification()
         checkFirstOpen()
+    }
+
+    private fun setupPolicyView() {
+        policy_frame.isVisible = true
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.blue_main)
+
+        policy_link.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://sites.google.com/view/smartcleanerlightpolicy/")))
+        }
+
+        button.throttleClicks({
+            prefs.isUserAcceptPolicy = true
+            policy_loader.isVisible = true
+            interstitialAdFail.let { interstitialAdFail ->
+                if (interstitialAdFail == true) {
+                    showMainContent()
+                } else if (interstitialAdFail == false && interstitialAd != null) {
+                    interstitialAd!!.show(this)
+                    showMainContent()
+                }
+            }
+        }, lifecycleScope)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -214,6 +249,25 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
     private fun setupAdMob() {
         MobileAds.initialize(this) {}
 
+        InterstitialAd.load(this, getString(R.string.ad_interstitial_id), AdRequest.Builder().build(), object : InterstitialAdLoadCallback() {
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                interstitialAdFail = false
+                this@MainActivity.interstitialAd = interstitialAd
+                if (prefs.isUserAcceptPolicy) {
+                    if (!isFirstInternalShown) {
+                        interstitialAd.show(this@MainActivity)
+                        isFirstInternalShown = true
+                        showMainContent()
+                    }
+                }
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                interstitialAdFail = true
+                showMainContent()
+            }
+        })
+
         adBannerView.apply {
             loadAd(AdRequest.Builder().build())
             adListener = object : AdListener() {
@@ -227,24 +281,10 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
                 }
             }
         }
-
-        InterstitialAd.load(this, getString(R.string.ad_interstitial_id), AdRequest.Builder().build(), object : InterstitialAdLoadCallback() {
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                if (!isFirstInternalShown) {
-                    interstitialAd.show(this@MainActivity)
-                    isFirstInternalShown = true
-                }
-                showMainContent()
-            }
-
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                showMainContent()
-            }
-        })
-
     }
 
     private fun showMainContent() {
+        policy_frame.isVisible = false
         ObjectAnimator.ofFloat(binding.rootLay, View.ALPHA, 1.0f).also {
             it.duration = 1000
             it.start()

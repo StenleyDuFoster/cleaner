@@ -17,6 +17,7 @@ class SharedPreferences @Inject constructor(@ApplicationContext private val cont
         private const val LAST_SYSTEM_CLEAN_DATE = "last_system_clean_date"
         private const val LAST_MEMORY_CLEAN_DATE = "last_memory_clean_date"
         private const val LAST_CPU_CLEAN_DATE = "last_cpu_clean_date"
+        private const val USER_ACCEPT_POLICY = "user_accept_policy"
 
         const val CLEAN_DELAY_IN_HOUR = 4
     }
@@ -63,6 +64,16 @@ class SharedPreferences @Inject constructor(@ApplicationContext private val cont
         set(value) {
             sharedPreferences.edit {
                 putString(LAST_CPU_CLEAN_DATE, System.currentTimeMillis().toString())
+            }
+        }
+
+    var isUserAcceptPolicy: Boolean
+        get() {
+            return sharedPreferences.getBoolean(USER_ACCEPT_POLICY, false)
+        }
+        set(value) {
+            sharedPreferences.edit {
+                putBoolean(USER_ACCEPT_POLICY, value)
             }
         }
 

@@ -13,6 +13,175 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/policy_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:elevation="111dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/policy_background"
+                app:layout_constraintHeight_percent="0.4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_app_logo"
+                android:adjustViewBounds="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_app_logo" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_sans_extra_bold"
+                android:text="Smart Cleaner Light"
+                android:textColor="@color/black"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="33dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2"
+                tools:layout_editor_absoluteX="30dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:paddingBottom="33dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Welcome!"
+                        android:textColor="@color/black"
+                        android:textSize="30dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Please read carefully our rules"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="@+id/textView5"
+                        app:layout_constraintStart_toStartOf="@+id/textView5"
+                        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        app:layout_constraintTop_toBottomOf="@+id/textView2"></TextView>
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginTop="36dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView2"
+                        app:srcCompat="@drawable/ic_baseline_policy_24" />
+
+                    <TextView
+                        android:id="@+id/policy_link"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="Smart Cleaner Light policy"
+                        android:textColor="#0074CC"
+                        android:layout_marginStart="3dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+                        app:layout_constraintStart_toEndOf="@+id/imageView3"
+                        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:checked="true"
+                        android:text="I have read and accept rules"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <carbon.widget.LinearLayout
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/green_main"
+                app:carbon_cornerRadius="20dp"
+                app:carbon_elevation="15dp"
+                app:carbon_elevationShadowColor="@color/green_main"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView"
+                app:layout_constraintBottom_toBottomOf="@+id/cardView">
+
+                <TextView
+                    android:id="@+id/policyText"
+                    style="@style/NormalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="100dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/start"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </carbon.widget.LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/policy_loader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:indeterminate="true"
+                android:elevation="111dp"
+                app:layout_constraintBottom_toBottomOf="@+id/button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/button" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <TextView
             android:id="@+id/loadedText"
             style="@style/TitleText"
