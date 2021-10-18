@@ -30,9 +30,10 @@ import com.stenleone.clenner.databinding.ActivityMainBinding
 import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
-import com.stenleone.clenner.receiver.AlarmNotificationReceiver
+import com.stenleone.clenner.notification.AlarmNotificationReceiver
 import com.stenleone.clenner.receiver.InstallReferrerReceiver
-import com.stenleone.clenner.service.AlarmNotificationService
+import com.stenleone.clenner.notification.AlarmNotificationService
+import com.stenleone.clenner.notification.NOTIFY_STORAGE
 import com.stenleone.clenner.ui.activity.base.BaseActivity
 import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
@@ -340,13 +341,13 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
     }
 
     private fun getIsFirstOpen(context: Context): Boolean {
-        val mSettings = context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE)
+        val mSettings = context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE)
 
         return mSettings.getBoolean("isFirstOpen", true)
     }
 
     private fun setIsFirstOpen(context: Context) {
-        val mSettings = context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE)
+        val mSettings = context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE)
 
         val editor = mSettings.edit()
         editor.putBoolean("isFirstOpen", false)
@@ -355,10 +356,10 @@ class MainActivity(override var layId: Int = R.layout.activity_main) :
 
     private val LAST_ALARM_NOTIFICATION_IS_CLOSED = "LAST_ALARM_NOTIFICATION_IS_CLOSED"
     private fun getLastAlarmNotificationIsClosed(context: Context): Boolean {
-        return context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE).getBoolean(LAST_ALARM_NOTIFICATION_IS_CLOSED, true)
+        return context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE).getBoolean(LAST_ALARM_NOTIFICATION_IS_CLOSED, true)
     }
     private fun setLastAlarmNotificationIsClosed(context: Context, value: Boolean) {
-        context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE).edit {
+        context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE).edit {
             putBoolean(LAST_ALARM_NOTIFICATION_IS_CLOSED, value)
         }
     }

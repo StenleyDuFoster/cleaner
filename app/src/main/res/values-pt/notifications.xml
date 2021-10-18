@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_alarm_notification_1">Há 1 dia que não limpa o seu telefone.</string>
+    <string name="text_alarm_notification_2">Foram detetadas 12 aplicações em execução que consomem a sua bateria.</string>
+    <string name="text_alarm_notification_3">Algumas aplicações estão a diminuir a velocidade de carregamento.</string>
+</resources>

@@ -1,10 +1,9 @@
-package com.stenleone.clenner.receiver
+package com.stenleone.clenner.notification
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.stenleone.clenner.util.notification.CleanAlertNotification
 
 class NotificationDismissReceiver: BroadcastReceiver() {
 

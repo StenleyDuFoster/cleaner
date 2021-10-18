@@ -1,4 +1,4 @@
-package com.stenleone.clenner.util.notification
+package com.stenleone.clenner.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,7 +13,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import com.stenleone.clenner.R
-import com.stenleone.clenner.receiver.NotificationDismissReceiver
 import com.stenleone.clenner.ui.activity.MainActivity
 import kotlin.random.Random
 
@@ -24,7 +23,6 @@ class CleanAlertNotification {
         private const val NOTIFICATION_STYLE_LAYOUT = "layoutRes"
         private const val NOTIFICATION_STYLE_TEXT = "textRes"
         private const val ALERT_PUSH_CODE = 999
-        private const val SHARED_NAME = "NOTIFY_PRESENT"
 
         fun createOnDismissIntent(
             context: Context,
@@ -39,22 +37,24 @@ class CleanAlertNotification {
         }
 
         fun getLastAlarmNotificationIsClosed(context: Context): Boolean {
-            return context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE).getBoolean(LAST_ALARM_NOTIFICATION_IS_CLOSED, true)
+            return context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE).getBoolean(
+                LAST_ALARM_NOTIFICATION_IS_CLOSED, true)
         }
 
         fun getLastAlarmNotificationStyleInt(context: Context, suffix: String): Int {
-            return context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE).getInt(LAST_ALARM_NOTIFICATION_STYLE + suffix, 0)
+            return context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE).getInt(
+                LAST_ALARM_NOTIFICATION_STYLE + suffix, 0)
         }
 
         fun setLastAlarmNotificationIsClosed(context: Context, value: Boolean) {
-            context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE).edit {
+            context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE).edit {
                 putBoolean(LAST_ALARM_NOTIFICATION_IS_CLOSED, value)
             }
         }
 
         fun setLastAlarmNotificationStyleInt(context: Context, suffix: String, value: Int) {
             if (suffix.isNotEmpty())
-                context.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE).edit {
+                context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE).edit {
                     putInt(LAST_ALARM_NOTIFICATION_STYLE + suffix, value)
                 }
         }
@@ -62,9 +62,9 @@ class CleanAlertNotification {
         fun send(context: Context, resetLastStyle: Boolean) {
             val layoutRes = if (resetLastStyle)
                 when(Random.nextInt(3)) {
-                    0 -> R.layout.alarm_notification
-                    1  -> R.layout.alarm_notification2
-                    else -> R.layout.alarm_notification3
+                    0 -> R.layout.alarm_notification_0
+                    1  -> R.layout.alarm_notification_1
+                    else -> R.layout.alarm_notification_2
                 } else getLastAlarmNotificationStyleInt(context, NOTIFICATION_STYLE_LAYOUT)
 
             val textRes = if (resetLastStyle)

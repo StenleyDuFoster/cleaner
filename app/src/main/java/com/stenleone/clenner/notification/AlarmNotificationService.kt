@@ -1,4 +1,4 @@
-package com.stenleone.clenner.service
+package com.stenleone.clenner.notification
 
 import android.app.*
 import android.content.Context
@@ -11,11 +11,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
-import com.stenleone.clenner.receiver.AlarmNotificationReceiver
-import com.stenleone.clenner.receiver.CheckStateScreenReceiver
 import com.stenleone.clenner.ui.activity.MainActivity
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class AlarmNotificationService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
@@ -24,13 +21,12 @@ class AlarmNotificationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        registerReceiver(AlarmNotificationReceiver(), IntentFilter("PUSH"))
+        registerReceiver(AlarmNotificationReceiver(), IntentFilter(SEND_PUSH_ACTION))
         registerReceiver(CheckStateScreenReceiver(), IntentFilter().apply {
             addAction(Intent.ACTION_USER_PRESENT)
             addAction(Intent.ACTION_SCREEN_OFF)
         })
         start(this)
-//        updateRepeatAlarm(this)
         updateSingleAlarm(this)
     }
 
@@ -71,7 +67,7 @@ class AlarmNotificationService : Service() {
     companion object {
         fun updateSingleAlarm(context: Context) {
             val notifyIntent = Intent(context, AlarmNotificationReceiver::class.java)
-            notifyIntent.action = "PUSH"
+            notifyIntent.action = SEND_PUSH_ACTION
             val pendingIntent = PendingIntent.getBroadcast(
                 context,
                 0,
@@ -99,35 +95,6 @@ class AlarmNotificationService : Service() {
             )
 
             Log.d("test", "updateSingleAlarm to ${calendar.time}")
-        }
-
-        fun updateRepeatAlarm(context: Context) {
-            val notifyIntent = Intent(context, AlarmNotificationReceiver::class.java)
-            notifyIntent.action = "PUSH"
-            val pendingIntent = PendingIntent.getBroadcast(
-                context,
-                0,
-                notifyIntent,
-                0
-            )
-
-            val alarmManager: AlarmManager =
-                context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-            val calendar: Calendar = Calendar.getInstance()
-            calendar.timeInMillis = System.currentTimeMillis()
-            calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 1)
-            calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY))
-
-            alarmManager.setRepeating(
-                AlarmManager.RTC,
-                calendar.timeInMillis,
-//                TimeUnit.HOURS.toMillis(2),
-                TimeUnit.MINUTES.toMillis(1),
-                pendingIntent
-            )
-
-            Log.d("test", "updateRepeatAlarm to ${calendar.time}")
         }
     }
 }

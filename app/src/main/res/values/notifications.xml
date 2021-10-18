@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_alarm_notification_1">You have not cleaned your phone for 1 day.</string>
+    <string name="text_alarm_notification_2">12 running applications have been detected that consume your battery.</string>
+    <string name="text_alarm_notification_3">Detected some apps slowing down charging speed.</string>
+
+    <string name="text_alarm_notification_header" translatable="false">Phone Cleaner</string>
+</resources>

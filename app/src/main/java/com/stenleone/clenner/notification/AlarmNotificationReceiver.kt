@@ -1,18 +1,16 @@
-package com.stenleone.clenner.receiver
+package com.stenleone.clenner.notification
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.stenleone.clenner.service.AlarmNotificationService
-import com.stenleone.clenner.util.notification.CleanAlertNotification
 
 class AlarmNotificationReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val isPhoneLocked = isPhoneLocked(context)
 
-        if (intent.action == "PUSH") {
+        if (intent.action == SEND_PUSH_ACTION) {
             if (isPhoneLocked) {
                 setIsWaiting(context, true)
                 context.startService(Intent(context, CheckStateScreenReceiver::class.java))
@@ -26,7 +24,7 @@ class AlarmNotificationReceiver: BroadcastReceiver() {
     }
 
     private fun setIsWaiting(context: Context, flag: Boolean) {
-        val mSettings = context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE)
+        val mSettings = context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE)
 
         val editor = mSettings.edit()
         editor.putBoolean("isWaiting", flag)
@@ -34,7 +32,7 @@ class AlarmNotificationReceiver: BroadcastReceiver() {
     }
 
     private fun isPhoneLocked(context: Context): Boolean {
-        val mSettings = context.getSharedPreferences("NOTIFY_PRESENT", Context.MODE_PRIVATE)
+        val mSettings = context.getSharedPreferences(NOTIFY_STORAGE, Context.MODE_PRIVATE)
 
         return mSettings.getBoolean("isLocked", false)
     }
