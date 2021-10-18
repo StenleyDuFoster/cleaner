@@ -1,14 +1,17 @@
 package com.stenleone.clenner.util.notification
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.stenleone.clenner.BuildConfig
 import com.stenleone.clenner.R
 import com.stenleone.clenner.ui.activity.MainActivity
@@ -95,24 +98,27 @@ class NotificationBuilder(
 
     fun createLayoutBuildNotification(): NotificationCompat.Builder {
 
-        val notificationLayout = RemoteViews(BuildConfig.APPLICATION_ID, R.layout.notification_lay)
+        val notificationLayout = RemoteViews(context.packageName, R.layout.notification_lay)
+//        notificationLayout.setImageViewResource(R.id.notification_image, R.drawable.ic_app_logo)
+//        notificationLayout.setTextViewText(R.id.notification_title, "1")
+//        notificationLayout.setTextViewText(R.id.notification_text, "12313")
+        notificationLayout.setInt(R.id.notification_root, "setBackgroundColor", ContextCompat.getColor(context, R.color.black))
+//        notificationLayout.setOnClickPendingIntent(R.id.rootView, PendingIntent.getActivity(
+//            context,
+//            PUSH_REQUEST_CODE,
+//            resultIntent,
+//            PendingIntent.FLAG_ONE_SHOT
+//        ))
 
         return NotificationCompat.Builder(context, channelId)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
             .setSmallIcon(R.drawable.ic_app_logo)
-            .setCustomContentView(notificationLayout)
-            .setContentIntent(
-                PendingIntent.getActivity(
-                    context,
-                    PUSH_REQUEST_CODE,
-                    resultIntent,
-                    PendingIntent.FLAG_ONE_SHOT
-                )
-            )
-            .setPriority(NotificationCompat.PRIORITY_MAX)
-            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-            .setVibrate(longArrayOf(500, 500, 500, 500))
+            .setContent(notificationLayout)
             .setAutoCancel(false)
+            .setWhen(0)
+            .setSound(null)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setPriority(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) NotificationManager.IMPORTANCE_HIGH else Notification.PRIORITY_MAX)
+//            .setContentIntent(PendingIntent.getActivity(context, notification.id, notification.intent(context), PendingIntent.FLAG_ONE_SHOT))
     }
 
     fun createDefaultNotify() {

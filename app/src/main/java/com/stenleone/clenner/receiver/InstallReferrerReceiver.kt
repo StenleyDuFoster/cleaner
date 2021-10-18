@@ -2,7 +2,6 @@ package com.stenleone.clenner.receiver
 
 import android.content.Context
 import android.content.Intent
-import com.google.firebase.firestore.FirebaseFirestore
 import com.infoedge.installreferrer.receiver.ReferralReceiver
 import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
@@ -16,7 +15,6 @@ import kotlinx.coroutines.launch
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class InstallReferrerReceiver : BaseReceiver() {
@@ -42,11 +40,6 @@ class InstallReferrerReceiver : BaseReceiver() {
                 var mainUrl = configService.getStringAsync(Config.POST_USER_DATA_URL)
 
                 try {
-
-                    FirebaseFirestore.getInstance().collection("postBack")
-                        .add(hashMapOf(Pair("list", clId)))
-
-
 //                    apiService.sendSource(mainUrl + "${ApiService.POSTBACK}/?cnv_id=${clId}")
 
                     apiService.postUserAppOpen("${mainUrl}${clId}")
