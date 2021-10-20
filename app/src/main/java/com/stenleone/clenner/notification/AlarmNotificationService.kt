@@ -81,11 +81,11 @@ class AlarmNotificationService : Service() {
             val calendar: Calendar = Calendar.getInstance()
             calendar.timeInMillis = System.currentTimeMillis()
             if (BuildConfig.DEBUG) {
-                calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 5)
                 calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY))
+                calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + 5)
             } else {
-                calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE))
-                calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + 2)
+                calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) + NOTIFY_PERIOD_H)
+                calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) + NOTIFY_PERIOD_M)
             }
 
             alarmManager.setExact(
