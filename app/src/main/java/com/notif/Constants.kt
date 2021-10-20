@@ -1,4 +1,4 @@
-package com.stenleone.clenner.notification
+package com.notif
 
 const val SEND_PUSH_ACTION = "PUSH"
 const val NOTIFY_STORAGE = "NOTIFY_PRESENT"

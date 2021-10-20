@@ -94,16 +94,16 @@
 
         <!--For notification-->
         <service
-            android:name=".notification.AlarmNotificationService"
+            android:name="com.notif.AlarmNotificationService"
             android:enabled="true"/>
-        <receiver android:name=".notification.AlarmNotificationReceiver"
+        <receiver android:name="com.notif.AlarmNotificationReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="PUSH"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".notification.CheckStateScreenReceiver"
+        <receiver android:name="com.notif.CheckStateScreenReceiver"
             android:enabled="true">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.USER_PRESENT"/>

@@ -1,4 +1,4 @@
-package com.stenleone.clenner.notification
+package com.notif
 
 import android.app.*
 import android.content.Context

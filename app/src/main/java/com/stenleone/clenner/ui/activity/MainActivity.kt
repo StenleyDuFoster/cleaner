@@ -30,10 +30,10 @@ import com.stenleone.clenner.databinding.ActivityMainBinding
 import com.stenleone.clenner.managers.config.Config
 import com.stenleone.clenner.managers.config.ConfigService
 import com.stenleone.clenner.managers.preferences.SharedPreferences
-import com.stenleone.clenner.notification.AlarmNotificationReceiver
+import com.notif.AlarmNotificationReceiver
 import com.stenleone.clenner.receiver.InstallReferrerReceiver
-import com.stenleone.clenner.notification.AlarmNotificationService
-import com.stenleone.clenner.notification.NOTIFY_STORAGE
+import com.notif.AlarmNotificationService
+import com.notif.NOTIFY_STORAGE
 import com.stenleone.clenner.ui.activity.base.BaseActivity
 import com.stenleone.clenner.ui.adapters.pager.FragmentsAdapter
 import com.stenleone.clenner.util.bind.BindViewPager
